@@ -5,10 +5,20 @@ import { prisma } from '$lib/db/prisma';
 export const load: PageServerLoad = async () => {
 	return {
 		products: await prisma.product.findMany({
-			include: {
-				Picture: true,
-				Description: true,
-				ProductDetail: true
+			select: {
+				title: true,
+				price: true,
+				Picture: {
+					select: {
+						smallPic: true,
+						largePics: true
+					}
+				},
+				Description: {
+					select: {
+						description_short: true
+					}
+				}
 			}
 		})
 	};
