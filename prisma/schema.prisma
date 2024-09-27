@@ -14,27 +14,19 @@ model Description {
   Product           Product?
 }
 
-model Picture {
-  id        String   @id
-  smallPic  String
-  largePics String[]
-  Product   Product?
-}
-
 model Product {
   id              String        @id
   title           String
   sku             String        @unique
-  slug            String
+  slug            String        @unique
   price           Float
   url             String
   createdAt       DateTime      @default(now())
   updatedAt       DateTime
-  picturesId      String        @unique
   descriptionId   String        @unique
   productDetailId String        @unique
+  pictures        String[]
   Description     Description   @relation(fields: [descriptionId], references: [id])
-  Picture         Picture       @relation(fields: [picturesId], references: [id])
   ProductDetail   ProductDetail @relation(fields: [productDetailId], references: [id])
 }
 
