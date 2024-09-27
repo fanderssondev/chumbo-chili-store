@@ -16,8 +16,9 @@
 	});
 </script>
 
-<header class="flex max-w-full bg-primary text-primary-foreground">
-	<div class="lg:grid-cols-header container grid items-center">
+<!-- BUG Container not aligned -->
+<header class="relative flex max-w-full border-b-2 bg-accent text-secondary-foreground">
+	<div class="container grid items-center">
 		<!-- <img src="/pinata.svg" alt="Pinyata logo" class="mr-auto size-10" /> -->
 		<h1
 			class="font-montserrat mr-auto hidden text-4xl font-semibold tracking-wider lg:inline-block"
@@ -37,7 +38,7 @@
 		on:click={theme.toggleDarkmode}
 		variant="outline"
 		size="icon"
-		class="m-2 rounded-full border-none bg-transparent hover:bg-secondary"
+		class="absolute right-2 top-[0.1rem] rounded-full border-none bg-transparent hover:bg-secondary"
 	>
 		<Sun class="size-[1.5rem] rotate-0 scale-0 transition-all dark:-rotate-90 dark:scale-100" />
 		<Moon
@@ -50,3 +51,8 @@
 <main class="container min-h-screen">
 	{@render children()}
 </main>
+
+<!-- TODO Implement footer -->
+<footer class="mt-16 flex max-w-full border-b-2 bg-accent text-secondary-foreground">
+	gojdgnoj
+</footer>
