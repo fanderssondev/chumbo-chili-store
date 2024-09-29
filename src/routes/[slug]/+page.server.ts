@@ -13,14 +13,13 @@ export const load: PageServerLoad = async ({ params }) => {
 				price: true,
 				pictures: true,
 				slug: true,
-				url: true,
 				Description: {
 					select: {
 						description_short: true,
 						description_long: true
 					}
 				},
-				ProductDetail: {
+				ProductDetails: {
 					select: {
 						category: true,
 						manufacturer: true,
