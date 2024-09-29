@@ -49,7 +49,7 @@
 	</Button>
 </header>
 
-<main class="container min-h-screen">
+<main class="container mt-16 min-h-screen">
 	{@render children()}
 </main>
 

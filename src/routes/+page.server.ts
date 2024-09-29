@@ -9,6 +9,7 @@ export const load: PageServerLoad = async () => {
 				title: true,
 				price: true,
 				pictures: true,
+				slug: true,
 				Description: {
 					select: {
 						description_short: true
