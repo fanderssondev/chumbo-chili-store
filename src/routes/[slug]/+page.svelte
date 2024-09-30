@@ -42,6 +42,7 @@
 						class="size-full rounded-lg shadow-sm shadow-primary"
 						alt="product"
 					/>
+					<!-- TODO Change to Carousel -->
 					{#if data.product.pictures.length > 1}
 						{@render pagination()}
 					{/if}
