@@ -1,16 +1,18 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Card from '$lib/components/ui/card/index';
 	import * as Pagination from '$lib/components/ui/pagination';
-	import { CloudCog } from 'lucide-svelte';
 	import { ChevronLeft, ChevronRight } from 'svelte-radix';
 
 	let { data } = $props();
 
 	let initial = $state(0);
 	let activePicture = $derived.by(() => {
-		return initial % (data?.product?.pictures?.length ?? 1);
+		if (initial < 0) return 0;
+		if (data?.product?.pictures?.length && initial > data.product.pictures.length)
+			return data.product.pictures.length;
+
+		return initial;
 	});
 </script>
 
@@ -133,7 +135,7 @@
 			<Pagination.Content>
 				<Pagination.Item>
 					<Pagination.PrevButton>
-						<ChevronLeft onclick={() => --initial} />
+						<ChevronLeft onclick={() => initial--} />
 					</Pagination.PrevButton>
 				</Pagination.Item>
 				{#each pages as page (page.key)}
@@ -149,7 +151,7 @@
 				{/each}
 				<Pagination.Item>
 					<Pagination.NextButton>
-						<ChevronRight onclick={() => ++initial} />
+						<ChevronRight onclick={() => initial++} />
 					</Pagination.NextButton>
 				</Pagination.Item>
 			</Pagination.Content>
