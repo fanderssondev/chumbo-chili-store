@@ -1,5 +1,4 @@
 <script lang="ts">
-	import StarRating from '$lib/components/StarRating.svelte';
 	import { Button } from '$lib/components/ui/button/index';
 	import * as Card from '$lib/components/ui/card/index';
 	import { ChevronLeft, ChevronRight } from 'svelte-radix';
@@ -19,22 +18,6 @@
 
 		if (data?.product?.pictures.length && activePicture > data.product.pictures.length - 1) {
 			activePicture = 0;
-		}
-	};
-
-	const getStarFillPercentage = (index: number) => {
-		// const rating = data?.product?.ProductDetails.Rating.average ?? 0;
-		const rating = 2.25;
-
-		if (index + 1 <= rating) {
-			console.log('first', index + 1);
-			return 1;
-		} else if (rating < index + 1 && rating - index > 0) {
-			console.log('second', index + 1, rating - (index + 1));
-			return rating - index;
-		} else {
-			console.log('third', index + 1);
-			return 0;
 		}
 	};
 </script>
@@ -102,9 +85,7 @@
 {#snippet sideInfo()}
 	<div class="flex flex-col items-end">
 		<div>
-			<Button variant="default"
-				><iconify-icon icon="lucide:shopping-cart" class="mr-2 text-xl"></iconify-icon>Add to Cart</Button
-			>
+			<Button variant="default">Add to Cart</Button>
 			<p class="mt-4 self-end">
 				PRICE: <span class="text-2xl text-destructive">{data?.product?.price.toFixed(2)}&#8364</span
 				>
@@ -112,43 +93,35 @@
 			{#if (data?.product?.ProductDetails?.Rating?.nr_of_reviews ?? 0) > 0}
 				<p>Nr of reviews: {data?.product?.ProductDetails.Rating.nr_of_reviews}</p>
 				<p>Average rating: {data?.product?.ProductDetails.Rating.average.toFixed(2)}</p>
-				<StarRating fillPercentage={data.product?.ProductDetails.Rating.average ?? 1} />
+				{@render stars()}
 			{/if}
 		</div>
 	</div>
 {/snippet}
 
 {#snippet stars()}
-	<svg
-		width="725"
-		height="633"
-		viewBox="0 0 725 633"
-		fill="none"
-		xmlns="http://www.w3.org/2000/svg"
-		class=""
-	>
-		<!-- <rect width="725" height="633" fill="#1E1E1E" /> -->
-		<!-- <rect width="725" height="633" fill="white" /> -->
-
+	<svg width="138" height="26" viewBox="0 0 138 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 		{#each [1, 2, 3, 4, 5] as _, i}
 			<!-- Define a mask to control partial fill for the star at index {i} -->
 			<defs>
 				<clipPath id="clip-{i}">
 					<rect
-						x={i * 28 + 250}
-						y="272"
-						width={Math.min(1, Math.max(0, 2.5 - i)) * 20}
-						height="24"
+						x={i * 28 + 1}
+						y="0"
+						width={Math.min(
+							1,
+							Math.max(0, (data?.product?.ProductDetails.Rating.average ?? 0) - i)
+						) * 25}
+						height="26"
 					/>
 				</clipPath>
 			</defs>
 
 			<!-- Star outline -->
 			<path
-				d="M{250 + i * 28} 272L{253.708 + i * 28} 279.899L{262 + i * 28} 281.174L{256 +
-					i * 28} 287.319L{257.416 + i * 28} 296L{250 + i * 28} 291.899L{242.584 +
-					i * 28} 296L{244 + i * 28} 287.319L{238 + i * 28} 281.174L{246.292 +
-					i * 28} 279.899L{250 + i * 28} 272Z"
+				d="M{13 + i * 28} 1L{16.708 + i * 28} 8.89905L{25 + i * 28} 10.1735L{19 +
+					i * 28} 16.3186L{20.416 + i * 28} 25L{13 + i * 28} 20.8991L{5.584 + i * 28} 25L{7 +
+					i * 28} 16.3186L{1 + i * 28} 10.1735L{9.292 + i * 28} 8.89905L{13 + i * 28} 1Z"
 				stroke="black"
 				stroke-linecap="round"
 				stroke-linejoin="round"
@@ -157,10 +130,9 @@
 
 			<!-- Star fill using the clipPath for partial fill -->
 			<path
-				d="M{250 + i * 28} 272L{253.708 + i * 28} 279.899L{262 + i * 28} 281.174L{256 +
-					i * 28} 287.319L{257.416 + i * 28} 296L{250 + i * 28} 291.899L{242.584 +
-					i * 28} 296L{244 + i * 28} 287.319L{238 + i * 28} 281.174L{246.292 +
-					i * 28} 279.899L{250 + i * 28} 272Z"
+				d="M{13 + i * 28} 1L{16.708 + i * 28} 8.89905L{25 + i * 28} 10.1735L{19 +
+					i * 28} 16.3186L{20.416 + i * 28} 25L{13 + i * 28} 20.8991L{5.584 + i * 28} 25L{7 +
+					i * 28} 16.3186L{1 + i * 28} 10.1735L{9.292 + i * 28} 8.89905L{13 + i * 28} 1Z"
 				stroke="none"
 				fill="yellow"
 				clip-path="url(#clip-{i})"
@@ -168,25 +140,3 @@
 		{/each}
 	</svg>
 {/snippet}
-
-<!-- <svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			class="fill-yellow-400 stroke-background"
-			><polygon
-				points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-			/></svg
-		> -->
-
-<style>
-	iconify-icon {
-		display: inline-block;
-	}
-</style>
