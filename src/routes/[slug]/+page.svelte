@@ -2,12 +2,11 @@
 	import { Button } from '$lib/components/ui/button/index';
 	import * as Card from '$lib/components/ui/card/index';
 	import { ChevronLeft, ChevronRight } from 'svelte-radix';
+	import { currencyFormatter } from '$lib/utils/utils';
 
 	let { data } = $props();
 
 	let activePicture = $state(0);
-	let starSize = $state(36);
-	let maskWidth = $derived(0.5 * starSize);
 
 	const setActivePicture = (value: number) => {
 		activePicture += value;
@@ -24,18 +23,21 @@
 
 <Card.Root class="flex h-full flex-col rounded-lg border-2 bg-accent">
 	<Card.Header class="p-20">
-		<Card.Title class="mb-12 text-4xl">{data?.product?.title}</Card.Title>
-		<div class="grid grid-cols-2 gap-8">
+		<Card.Title class="mb-10 text-5xl">{data?.product?.title}</Card.Title>
+		<div class="grid grid-cols-[auto_1fr] gap-8">
 			{@render pictures()}
-			<div>
-				<div class="mb-6">
+			<div class="flex flex-col justify-between">
+				<div class="hidden text-lg xl:block">
 					{data?.product?.Description.description_short}
 				</div>
 				{@render sideInfo()}
 			</div>
 		</div>
+		<div class="pt-6 text-lg xl:hidden">
+			{data?.product?.Description.description_short}
+		</div>
 	</Card.Header>
-	<Card.Content class="mt-6 flex h-full flex-grow flex-col px-20 py-10">
+	<Card.Content class="flex h-full flex-grow flex-col px-20 pb-10 pt-0">
 		<p class="flex-grow">{@html data?.product?.Description.description_long}</p>
 	</Card.Content>
 </Card.Root>
@@ -50,50 +52,53 @@
 							<img
 								src="/productPics/{picture}"
 								alt="product"
-								class="size-24 rounded-lg shadow-primary"
+								class="size-16 rounded-lg shadow-primary"
 								class:shadow-sm={i === activePicture}
 							/>
 						</button>
 					</li>
 				{/each}
 			</ul>
-			<div class="group relative">
-				<img
-					src="/productPics/{data?.product?.pictures[activePicture]}"
-					class="size-full rounded-lg shadow-sm shadow-primary"
-					alt="product"
-				/>
-				<Button
-					variant="ghost"
-					onclick={() => setActivePicture(-1)}
-					class="absolute left-0 top-0 hidden h-full rounded-e-none p-0 hover:bg-transparent group-hover:block"
-				>
-					<ChevronLeft class="size-16" />
-				</Button>
-				<Button
-					variant="ghost"
-					onclick={() => setActivePicture(1)}
-					class="absolute right-0 top-0 hidden h-full rounded-s-none p-0 hover:bg-transparent group-hover:block"
-				>
-					<ChevronRight class="size-16" />
-				</Button>
+			<div class="group relative flex-grow">
+				<div class="relative inline-block">
+					<img
+						src="/productPics/{data?.product?.pictures[activePicture]}"
+						class="size-80 rounded-lg shadow-sm shadow-primary"
+						alt="product"
+					/>
+					<Button
+						variant="ghost"
+						onclick={() => setActivePicture(-1)}
+						class="absolute left-0 top-0 hidden h-full rounded-e-none p-0 hover:bg-transparent group-hover:block"
+					>
+						<ChevronLeft class="size-16" />
+					</Button>
+					<Button
+						variant="ghost"
+						onclick={() => setActivePicture(1)}
+						class="absolute right-0 top-0 hidden h-full rounded-s-none p-0 hover:bg-transparent group-hover:block"
+					>
+						<ChevronRight class="size-16" />
+					</Button>
+				</div>
 			</div>
 		</div>
 	{/if}
 {/snippet}
 
 {#snippet sideInfo()}
-	<div class="flex flex-col items-end">
+	<div class="flex flex-col items-end pr-4">
 		<div>
-			<Button variant="default">Add to Cart</Button>
-			<p class="mt-4 self-end">
-				PRICE: <span class="text-2xl text-destructive">{data?.product?.price.toFixed(2)}&#8364</span
-				>
+			<p class="mb-4 text-5xl">
+				{currencyFormatter(data?.product?.price ?? 0)}
 			</p>
+			<Button class="mb-4" size="lg" variant="default">Add to Cart</Button>
 			{#if (data?.product?.ProductDetails?.Rating?.nr_of_reviews ?? 0) > 0}
-				<p>Nr of reviews: {data?.product?.ProductDetails.Rating.nr_of_reviews}</p>
-				<p>Average rating: {data?.product?.ProductDetails.Rating.average.toFixed(2)}</p>
 				{@render stars()}
+				<p>
+					{data?.product?.ProductDetails.Rating.nr_of_reviews}
+					{data?.product?.ProductDetails?.Rating?.nr_of_reviews === 1 ? 'review' : 'reviews'}
+				</p>
 			{/if}
 		</div>
 	</div>
@@ -122,7 +127,7 @@
 				d="M{13 + i * 28} 1L{16.708 + i * 28} 8.89905L{25 + i * 28} 10.1735L{19 +
 					i * 28} 16.3186L{20.416 + i * 28} 25L{13 + i * 28} 20.8991L{5.584 + i * 28} 25L{7 +
 					i * 28} 16.3186L{1 + i * 28} 10.1735L{9.292 + i * 28} 8.89905L{13 + i * 28} 1Z"
-				stroke="black"
+				stroke="currentColor"
 				stroke-linecap="round"
 				stroke-linejoin="round"
 				fill="transparent"
@@ -134,7 +139,7 @@
 					i * 28} 16.3186L{20.416 + i * 28} 25L{13 + i * 28} 20.8991L{5.584 + i * 28} 25L{7 +
 					i * 28} 16.3186L{1 + i * 28} 10.1735L{9.292 + i * 28} 8.89905L{13 + i * 28} 1Z"
 				stroke="none"
-				fill="yellow"
+				fill="hsl(var(--star))"
 				clip-path="url(#clip-{i})"
 			/>
 		{/each}

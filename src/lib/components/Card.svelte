@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card/index';
+	import { currencyFormatter } from '$lib/utils/utils';
 
 	interface Props {
 		title: string;
@@ -22,7 +23,7 @@
 		<Card.Content class="mt-6 flex h-full flex-grow flex-col p-4">
 			<Card.Title class="mb-2 text-lg">{props.title}</Card.Title>
 			<p class="flex-grow">{props.Description.description_short}</p>
-			<p class="mt-4 self-end">{props.price.toFixed(2)}&#8364</p>
+			<p class="mt-4 self-end">{currencyFormatter(props.price)}</p>
 		</Card.Content>
 	</Card.Root>
 </a>
