@@ -80,12 +80,12 @@
 	</div>
 </header>
 
-<main class="container mt-16 min-h-screen">
+<main class="container my-8 min-h-screen lg:my-16">
 	{@render children()}
 </main>
 
 <!-- BUG Not responsive -->
-<footer class="mt-16 border-t-2 bg-accent pt-6 text-secondary-foreground">
+<footer class="border-t-2 bg-accent pt-6 text-secondary-foreground">
 	<div class="container flex justify-center gap-36">
 		<div>
 			<h4 class="text-lg font-semibold text-muted-foreground">Links</h4>
