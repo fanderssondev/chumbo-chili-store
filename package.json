@@ -35,7 +35,7 @@
 	},
 	"dependencies": {
 		"@prisma/client": "^5.20.0",
-		"bits-ui": "^0.21.15",
+		"bits-ui": "^0.21.16",
 		"clsx": "^2.1.1",
 		"iconify-icon": "^2.1.0",
 		"lucide-svelte": "^0.446.0",

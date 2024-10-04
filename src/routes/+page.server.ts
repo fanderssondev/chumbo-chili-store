@@ -15,6 +15,9 @@ export const load: PageServerLoad = async () => {
 						description_short: true
 					}
 				}
+			},
+			orderBy: {
+				title: 'asc'
 			}
 		})
 	};

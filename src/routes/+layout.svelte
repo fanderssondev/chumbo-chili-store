@@ -6,6 +6,8 @@
 	import { Button } from '$lib/components/ui/button';
 	import { useTheme } from '$lib/stores/useTheme.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
+	import * as Sheet from '$lib/components/ui/sheet';
+	import { HamburgerMenu } from 'svelte-radix';
 
 	const { children } = $props();
 
@@ -18,18 +20,10 @@
 	});
 </script>
 
-{#snippet navLinks()}
-	<li><a href="/products">Products</a></li>
-	<li><a href="/about">About Us</a></li>
-	<li><a href="/contact">Contact Us</a></li>
-	<li><a href="/github.com">Github</a></li>
-{/snippet}
-
-<header class="flex border-b-2 bg-accent p-2 text-secondary-foreground">
-	<!-- <div class="flex-1"></div> -->
-	<div class="container flex justify-between">
+<header class="border-b-2 bg-accent py-2 pl-4 text-secondary-foreground md:block md:p-2">
+	<div class="flex items-center justify-between md:container">
 		<div class="flex items-center gap-2">
-			<svg class="size-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+			<svg class="size-8 md:size-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
 				><path
 					fill="#ea580c"
 					d="m23.074 363.228l3.647-1.75l4.385-2.069l2.781-1.308c.486-.234 1.025-.471 1.511-.722l1.358-.788a477 477 0 0 1 6.078-3.494c2.126-1.182 4.658-2.716 7.284-4.287c2.629-1.58 5.409-3.197 8.27-5.107l4.4-2.812l2.261-1.447l2.278-1.572c6.142-4.162 12.578-8.907 19.178-14.065l4.975-3.939c1.669-1.328 3.314-2.792 4.995-4.175c1.67-1.421 3.369-2.771 5.037-4.27l5.028-4.486c1.688-1.473 3.352-3.054 5.027-4.625l5.026-4.72l4.973-4.932l2.484-2.472l2.462-2.552c6.607-6.671 12.979-13.924 19.256-21.085c3.108-3.666 6.195-7.279 9.186-11.033c3.029-3.646 5.963-7.458 8.874-11.129c2.871-3.804 5.72-7.468 8.461-11.263c2.777-3.697 5.462-7.467 8.091-11.139c1.315-1.833 2.597-3.719 3.873-5.542a321 321 0 0 0 3.762-5.478l3.67-5.374l3.549-5.32c2.331-3.484 4.573-6.973 6.741-10.305c2.168-3.391 4.228-6.639 6.303-9.766c4.123-6.179 8.178-11.777 12.003-16.557a183 183 0 0 1 5.553-6.67c1.791-2.068 3.505-3.895 5.062-5.542c3.205-3.355 5.877-5.827 7.854-7.548c1.94-1.693 3.067-2.505 3.067-2.505c48.016-34.586 114.978-23.699 149.564 24.318c27.297 37.897 26.268 87.595 1.015 123.863l-.557.746s-.771 1.103-2.388 2.999c-1.581 1.869-4.127 4.662-7.564 8.007c-1.771 1.697-3.741 3.571-5.961 5.533a219 219 0 0 1-7.487 6.32c-5.53 4.448-12.032 9.261-19.628 14.228c-7.57 4.936-16.143 10.049-25.233 15.457c-9.067 5.41-18.93 10.925-29.209 16.441c-10.298 5.528-21.173 10.982-32.353 16.239c-11.242 5.233-22.799 10.255-34.568 14.865c-2.917 1.175-5.919 2.261-8.86 3.381c-2.948 1.116-5.897 2.202-8.9 3.219l-8.912 3.062l-8.946 2.851l-4.435 1.39l-4.477 1.28l-8.854 2.491l-8.826 2.245l-4.35 1.086c-1.444.355-2.92.651-4.365.975l-8.599 1.856c-2.826.613-5.696 1.089-8.481 1.619c-2.801.507-5.542 1.029-8.293 1.451l-8.138 1.197c-10.671 1.559-20.854 2.399-30.17 2.989c-9.339.532-17.841.767-25.395.559c-3.768-.059-7.201-.093-10.674-.267a436 436 0 0 1-9.251-.46l-2.019-.119c-.612-.057-1.146-.14-1.696-.206l-3.049-.388l-4.809-.619l-4.008-.543c-16.258-2.201-27.654-17.165-25.452-33.423c1.38-10.208 7.974-18.584 16.585-22.794"
@@ -41,52 +35,31 @@
 					d="m502.766 153.514l-.283-.327l-5.14-5.947c-.822-.942-1.858-1.912-2.919-3.005c-1.091-1.074-2.209-2.276-3.522-3.478l-4.314-3.733c-.387-.322-.752-.669-1.171-.981l-1.279-.941l-2.651-1.937c-3.638-2.605-7.932-5.085-12.735-7.263c-.583-.301-1.207-.539-1.842-.767l-1.906-.706l-1.931-.705a15 15 0 0 0-1.985-.63l-4.114-1.067c-.347-.085-.692-.182-1.043-.257l-1.068-.174l-2.151-.341c-1.44-.227-2.89-.474-4.367-.516c-1.472-.083-2.957-.193-4.446-.234l-4.475.145l-1.125.044l-1.111.129l-2.227.266c-5.927.771-11.776 2.228-17.22 4.321c-5.455 2.067-10.689 4.501-15.493 7.288a164 164 0 0 0-7.729 4.731c-18.101-16.315-43.373-21.208-65.862-13.871c-.058.243.005.434-.076.684c-2.118 6.49-3.865 13.251 24.207 43.798s53.754 57.173 58.312 45.703c7.534-18.957 7.245-40.592-2.774-58.908a144 144 0 0 1 4.857-2.259c4.215-1.884 8.517-3.283 12.7-4.349c4.191-1.097 8.265-1.53 12.04-1.543l1.406.006l.696-.003l.679.077q1.351.149 2.666.257l2.534.499c.84.108 1.634.394 2.42.637l1.171.347l.58.164c.19.071.375.161.561.239q1.115.484 2.2.912c.18.075.363.133.539.22l.522.291l1.032.562l1.018.535c.338.165.673.338.992.58c2.595 1.667 4.976 3.451 7.084 5.431l1.542 1.46l.747.693c.245.23.47.519.702.768l2.61 2.885c.806.938 1.515 1.938 2.196 2.784c.668.881 1.313 1.611 1.843 2.394l3.327 4.891c.347.508.733 1.014 1.144 1.49c5.878 6.801 16.157 7.549 22.959 1.671c6.804-5.879 7.552-16.158 1.673-22.96m-104.8-12.756c.114.118.224.242.337.361q-.168-.182-.337-.361m6.928 8.495l.3.437zm-1.816-2.521q.219.29.432.583q-.214-.292-.432-.583"
 				/></svg
 			>
-			<h1 class="mr-auto font-dosis text-5xl font-bold tracking-wide text-orange-500">Chumbo</h1>
+			<h1 class="font-dosis text-2xl font-bold tracking-wide text-orange-500 md:text-5xl">
+				Chumbo
+			</h1>
 			<!-- <nav class="col-span-2 col-start-2 inline-block lg:col-start-3">
 			<ul class="flex items-center justify-end gap-4">
 				{@render navLinks()}
 			</ul>
-		</nav> -->
+			</nav> -->
 		</div>
-		<div class="flex items-center gap-8">
-			<Button variant="default">Sign in</Button>
-			<Button variant="ghost">
-				<svg class="size-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-					><g
-						fill="none"
-						stroke="currentColor"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path
-							d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
-						/></g
-					></svg
-				>
-			</Button>
-			<Button
-				on:click={theme.toggleDarkmode}
-				variant="outline"
-				size="icon"
-				class="rounded-full border-none bg-transparent hover:bg-secondary"
-			>
-				<Sun class="size-6 rotate-0 scale-0 transition-all dark:-rotate-90 dark:scale-100" />
-				<Moon
-					class="dark:rotate-270 absolute size-6 -rotate-90 scale-100 transition-all dark:scale-0"
-				/>
-				<span class="sr-only">Toggle theme</span>
-			</Button>
+		<div class="md:hidden">
+			{@render hamburgerMenu()}
+		</div>
+		<div class="hidden items-center gap-8 md:flex">
+			{@render headerButtons()}
 		</div>
 	</div>
 </header>
 
-<main class="container my-8 min-h-screen lg:my-16">
+<main class=" my-8 min-h-screen px-4 md:container lg:my-16">
 	{@render children()}
 </main>
 
 <!-- BUG Not responsive -->
-<footer class="border-t-2 bg-accent pt-6 text-secondary-foreground">
-	<div class="container flex justify-center gap-36">
+<footer class="border-t-2 bg-accent pt-6">
+	<div class="flex justify-center gap-16 px-4 md:container md:gap-36">
 		<div>
 			<h4 class="text-lg font-semibold text-muted-foreground">Links</h4>
 			<nav class="mb-6">
@@ -96,8 +69,8 @@
 			</nav>
 		</div>
 		<div class="flex flex-col">
-			<p class="self-center">Contact links</p>
-			<Separator class="mx-auto my-1 w-1/2 bg-secondary-foreground" />
+			<p class="self-center text-xl text-muted-foreground">Contact links</p>
+			<Separator class="mx-auto my-3 w-48 bg-secondary-foreground" />
 			<div class="flex gap-12 self-center">
 				<a
 					href="https://github.com/fanderssondev/chumbo-chili-store"
@@ -121,6 +94,80 @@
 		<a href="https://github.com/fanderssondev">Fredrik Andersson</a> | All Rights Reserved
 	</p>
 </footer>
+
+{#snippet navLinks()}
+	<li><a class="hover:underline" href="/products">Products</a></li>
+	<li><a class="hover:underline" href="/about">About Us</a></li>
+	<li><a class="hover:underline" href="/contact">Contact Us</a></li>
+	<li>
+		<a
+			class="hover:underline"
+			href="https://github.com/fanderssondev/chumbo-chili-store"
+			target="_blank">Github</a
+		>
+	</li>
+{/snippet}
+
+{#snippet headerButtons()}
+	<Button variant="default">Sign in</Button>
+	<Button variant="ghost">
+		<svg class="size-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+			><g
+				fill="none"
+				stroke="currentColor"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				stroke-width="2"
+				><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path
+					d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
+				/></g
+			></svg
+		>
+	</Button>
+	<Button
+		on:click={theme.toggleDarkmode}
+		variant="outline"
+		size="icon"
+		class="rounded-full border-none bg-transparent hover:bg-secondary"
+	>
+		<Sun class="size-6 rotate-0 scale-0 transition-all dark:-rotate-90 dark:scale-100" />
+		<Moon
+			class="dark:rotate-270 absolute size-6 -rotate-90 scale-100 transition-all dark:scale-0"
+		/>
+		<span class="sr-only">Toggle theme</span>
+	</Button>
+{/snippet}
+
+{#snippet hamburgerMenu()}
+	<Sheet.Root>
+		<Sheet.Trigger class="md:hidden">
+			<Button variant="ghost">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="lucide lucide-menu"
+				>
+					<line x1="4" x2="20" y1="12" y2="12" />
+					<line x1="4" x2="20" y1="6" y2="6" />
+					<line x1="4" x2="20" y1="18" y2="18" />
+				</svg>
+			</Button>
+		</Sheet.Trigger>
+		<Sheet.Content>
+			<Sheet.Header>
+				<Sheet.Title>Are you sure absolutely sure?</Sheet.Title>
+				<Sheet.Description>Content</Sheet.Description>
+			</Sheet.Header>
+		</Sheet.Content>
+	</Sheet.Root>
+{/snippet}
 
 <style>
 	iconify-icon {
