@@ -24,7 +24,7 @@
 <Card.Root class="flex h-full flex-col rounded-lg border-2 bg-accent">
 	<Card.Header class="p-10 lg:p-20">
 		<Card.Title class="mb-10 text-5xl">{data?.product?.title}</Card.Title>
-		<div class="grid grid-cols-[auto_1fr] gap-8">
+		<div class="grid gap-8 sm:grid-cols-[auto_1fr]">
 			{@render pictures()}
 			<div class="flex flex-col justify-between">
 				<div class="hidden text-lg xl:block">
@@ -86,20 +86,25 @@
 	{/if}
 {/snippet}
 
+<!-- BUG fix responsiveness -->
 {#snippet sideInfo()}
-	<div class="flex flex-col items-end pr-4">
-		<div>
-			<p class="mb-4 text-5xl">
+	<div class="flex justify-between sm:flex-col md:items-end">
+		<div class="flex w-full justify-between sm:flex-col">
+			<p class="text-4xl md:text-5xl">
 				{currencyFormatter(data?.product?.price ?? 0)}
 			</p>
-			<Button class="mb-4" size="lg" variant="default">Add to Cart</Button>
-			{#if (data?.product?.ProductDetails?.Rating?.nr_of_reviews ?? 0) > 0}
-				{@render stars()}
-				<p>
-					{data?.product?.ProductDetails.Rating.nr_of_reviews}
-					{data?.product?.ProductDetails?.Rating?.nr_of_reviews === 1 ? 'review' : 'reviews'}
-				</p>
-			{/if}
+			<div>
+				<Button class="" variant="default">Add to Cart</Button>
+				{#if (data?.product?.ProductDetails?.Rating?.nr_of_reviews ?? 0) > 0}
+					<div class="scale-75">
+						{@render stars()}
+					</div>
+					<p>
+						{data?.product?.ProductDetails.Rating.nr_of_reviews}
+						{data?.product?.ProductDetails?.Rating?.nr_of_reviews === 1 ? 'review' : 'reviews'}
+					</p>
+				{/if}
+			</div>
 		</div>
 	</div>
 {/snippet}
