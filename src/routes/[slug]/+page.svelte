@@ -90,20 +90,26 @@
 {#snippet sideInfo()}
 	<div class="flex justify-between sm:flex-col md:items-end">
 		<div class="flex w-full justify-between sm:flex-col">
-			<p class="text-4xl md:text-5xl">
-				{currencyFormatter(data?.product?.price ?? 0)}
-			</p>
 			<div>
-				<Button class="" variant="default">Add to Cart</Button>
+				<p>Hotness: {data?.product?.ProductDetails.hotness}/10</p>
+				<p>Category: {data?.product?.ProductDetails.category}</p>
+				<p>Manufaturer: {data?.product?.ProductDetails.manufacturer}</p>
+				<p>Weight: {data?.product?.ProductDetails.weight}kg</p>
 				{#if (data?.product?.ProductDetails?.Rating?.nr_of_reviews ?? 0) > 0}
-					<div class="scale-75">
+					<div class="">
 						{@render stars()}
 					</div>
-					<p>
+					<p class="hidden sm:inline-block">
 						{data?.product?.ProductDetails.Rating.nr_of_reviews}
 						{data?.product?.ProductDetails?.Rating?.nr_of_reviews === 1 ? 'review' : 'reviews'}
 					</p>
 				{/if}
+			</div>
+			<div class="flex flex-col">
+				<div class="text-4xl md:text-5xl">
+					{currencyFormatter(data?.product?.price ?? 0)}
+				</div>
+				<Button variant="default">Add to Cart</Button>
 			</div>
 		</div>
 	</div>

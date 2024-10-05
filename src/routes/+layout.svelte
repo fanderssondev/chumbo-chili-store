@@ -24,8 +24,8 @@
 	<title>Chumbo Chili Store</title>
 </svelte:head>
 
-<header class="border-b-2 bg-accent py-2 pl-4 text-secondary-foreground md:block md:p-2">
-	<div class="flex items-center justify-between md:container">
+<header class="border-b-2 bg-accent text-secondary-foreground">
+	<div class="container flex items-center justify-between px-0 pl-4 sm:px-4">
 		<div class="flex items-center gap-2">
 			<img class="size-8 md:size-12" src="/logo.svg" alt="" />
 			<h1 class="font-dosis text-2xl font-bold tracking-wide text-orange-500 md:text-5xl">
@@ -45,7 +45,8 @@
 	{@render children()}
 </main>
 
-<footer class="border-t-2 bg-accent pt-6">
+<!-- BUG not responsive -->
+<!-- <footer class="border-t-2 bg-accent pt-6">
 	<div class="flex justify-center gap-16 px-4 md:container md:gap-36">
 		<div>
 			<h4 class="text-lg font-semibold text-muted-foreground">Links</h4>
@@ -80,7 +81,7 @@
 		&copy; {new Date().getFullYear()}
 		<a href="https://github.com/fanderssondev">Fredrik Andersson</a> | All Rights Reserved
 	</p>
-</footer>
+</footer> -->
 
 {#snippet navLinks()}
 	<li><a class="hover:underline" href="/products">Products</a></li>
@@ -127,7 +128,7 @@
 
 {#snippet hamburgerMenu()}
 	<Sheet.Root>
-		<Sheet.Trigger class="md:hidden">
+		<Sheet.Trigger>
 			<Button variant="ghost">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
