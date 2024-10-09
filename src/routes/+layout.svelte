@@ -1,13 +1,11 @@
 <script lang="ts">
 	import '../app.css';
-	import 'iconify-icon';
 	import Sun from 'lucide-svelte/icons/sun';
 	import Moon from 'lucide-svelte/icons/moon';
 	import { Button } from '$lib/components/ui/button';
 	import { useTheme } from '$lib/stores/useTheme.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import * as Sheet from '$lib/components/ui/sheet';
-	import { HamburgerMenu } from 'svelte-radix';
 
 	const { children } = $props();
 
@@ -156,11 +154,3 @@
 		</Sheet.Content>
 	</Sheet.Root>
 {/snippet}
-
-<style>
-	iconify-icon {
-		display: inline-block;
-		width: 2rem;
-		height: 2rem;
-	}
-</style>

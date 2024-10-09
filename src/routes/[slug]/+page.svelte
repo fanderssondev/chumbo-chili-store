@@ -44,8 +44,8 @@
 
 {#snippet pictures()}
 	{#if data?.product?.pictures}
-		<div class="flex flex-col-reverse gap-4 md:flex-row">
-			<ul class="flex gap-4 md:flex-col">
+		<div class="flex flex-row gap-4">
+			<ul class="flex flex-col gap-4">
 				{#each data.product.pictures as picture, i}
 					<li>
 						<button aria-label="picture" onclick={() => (activePicture = i)}>
@@ -88,9 +88,9 @@
 
 <!-- BUG fix responsiveness -->
 {#snippet sideInfo()}
-	<div class="flex justify-between sm:flex-col md:items-end">
-		<div class="flex w-full justify-between sm:flex-col">
-			<div>
+	<div class="flex items-end justify-between sm:flex-col">
+		<div class=" flex w-full justify-between self-end sm:flex-col">
+			<div class="">
 				<p>Hotness: {data?.product?.ProductDetails.hotness}/10</p>
 				<p>Category: {data?.product?.ProductDetails.category}</p>
 				<p>Manufaturer: {data?.product?.ProductDetails.manufacturer}</p>
