@@ -22,6 +22,59 @@
 	<title>Chumbo Chili Store</title>
 </svelte:head>
 
+{#snippet navLinks()}
+	<li><a class="hover:underline" href="/products">Products</a></li>
+	<li><a class="hover:underline" href="/about">About Us</a></li>
+	<li><a class="hover:underline" href="/contact">Contact Us</a></li>
+	<li>
+		<a
+			class="hover:underline"
+			href="https://github.com/fanderssondev/chumbo-chili-store"
+			target="_blank">Github</a
+		>
+	</li>
+{/snippet}
+
+{#snippet hamburgerMenu()}
+	<Sheet.Root>
+		<Sheet.Trigger>
+			<Button variant="ghost">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="lucide lucide-menu"
+				>
+					<line x1="4" x2="20" y1="12" y2="12" />
+					<line x1="4" x2="20" y1="6" y2="6" />
+					<line x1="4" x2="20" y1="18" y2="18" />
+				</svg>
+			</Button>
+		</Sheet.Trigger>
+		<Sheet.Content>
+			<Sheet.Header>
+				<div>
+					<img class="size-8 md:size-12" src="/chumbo-logo.svg" alt="logo" />
+					<h1 class="font-dosis text-2xl font-bold tracking-wide text-orange-500 md:text-5xl">
+						Chumbo
+					</h1>
+				</div>
+			</Sheet.Header>
+			<nav>
+				<ul>
+					{@render navLinks()}
+				</ul>
+			</nav>
+		</Sheet.Content>
+	</Sheet.Root>
+{/snippet}
+
 <header class="border-b-2 bg-accent text-secondary-foreground">
 	<div class="container flex items-center justify-between px-0 pl-4 sm:px-4">
 		<div class="flex items-center gap-2">
@@ -34,7 +87,7 @@
 			{@render hamburgerMenu()}
 		</div>
 		<div class="hidden items-center gap-8 md:flex">
-			{@render headerButtons()}
+			{@render headerButtonSection()}
 		</div>
 	</div>
 </header>
@@ -110,20 +163,7 @@
 	</p>
 </footer>
 
-{#snippet navLinks()}
-	<li><a class="hover:underline" href="/products">Products</a></li>
-	<li><a class="hover:underline" href="/about">About Us</a></li>
-	<li><a class="hover:underline" href="/contact">Contact Us</a></li>
-	<li>
-		<a
-			class="hover:underline"
-			href="https://github.com/fanderssondev/chumbo-chili-store"
-			target="_blank">Github</a
-		>
-	</li>
-{/snippet}
-
-{#snippet headerButtons()}
+{#snippet headerButtonSection()}
 	<Button variant="default">Sign in</Button>
 	<Button variant="ghost">
 		<svg class="size-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -152,37 +192,3 @@
 		<span class="sr-only">Toggle theme</span>
 	</Button>
 {/snippet}
-
-{#snippet hamburgerMenu()}
-	<Sheet.Root>
-		<Sheet.Trigger>
-			<Button variant="ghost">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="lucide lucide-menu"
-				>
-					<line x1="4" x2="20" y1="12" y2="12" />
-					<line x1="4" x2="20" y1="6" y2="6" />
-					<line x1="4" x2="20" y1="18" y2="18" />
-				</svg>
-			</Button>
-		</Sheet.Trigger>
-		<Sheet.Content>
-			<Sheet.Header>
-				<Sheet.Title>Are you sure absolutely sure?</Sheet.Title>
-				<Sheet.Description>Content</Sheet.Description>
-			</Sheet.Header>
-		</Sheet.Content>
-	</Sheet.Root>
-{/snippet}
-
-<style>
-</style>
