@@ -22,7 +22,70 @@
 	};
 </script>
 
-<!-- BUG fix responsiveness -->
+<Card.Root class="flex h-full flex-col rounded-lg border-2 bg-accent">
+	<Card.Header class="p-4 pb-12 lg:p-20 lg:pt-8">
+		<Card.Title class="mb-4 mt-2 text-center text-3xl sm:text-4xl md:mb-10 md:mt-6 lg:text-5xl"
+			>{data?.product?.title}</Card.Title
+		>
+		<div class="grid gap-12 sm:grid-cols-[1fr_auto]">
+			{@render pictures()}
+			<div>
+				{@render sideInfo()}
+			</div>
+		</div>
+		<h3 class="pt-16 text-xl font-bold">
+			{data?.product?.Description.description_short}
+		</h3>
+	</Card.Header>
+	<Card.Content class="flex h-full flex-grow flex-col px-4 pb-10 pt-0 lg:px-20">
+		<p class="description">{@html data?.product?.Description.description_long}</p>
+	</Card.Content>
+</Card.Root>
+
+{#snippet pictures()}
+	{#if data?.product?.pictures}
+		<div class="flex flex-col-reverse gap-4 md:flex-row lg:gap-8">
+			<ul class="flex gap-4 md:flex-col">
+				{#each data.product.pictures as picture, i}
+					<li>
+						<button aria-label="picture" onclick={() => (activePicture = i)}>
+							<img
+								src="/productPics/{picture}"
+								alt="product"
+								class="size-16 rounded-lg shadow-primary md:size-20 lg:size-28"
+								class:shadow-sm={i === activePicture}
+							/>
+						</button>
+					</li>
+				{/each}
+			</ul>
+			<div class="flex-grow">
+				<div class="group relative inline-block size-full max-w-[36rem]">
+					<img
+						src="/productPics/{data?.product?.pictures[activePicture]}"
+						class="h-full w-full rounded-lg object-contain shadow-sm shadow-primary"
+						alt="product"
+					/>
+					<Button
+						variant="ghost"
+						onclick={() => setActivePicture(-1)}
+						class="absolute left-0 top-0 hidden h-full rounded-e-none p-0 hover:bg-transparent group-hover:block"
+					>
+						<ChevronLeft class="size-16" />
+					</Button>
+					<Button
+						variant="ghost"
+						onclick={() => setActivePicture(1)}
+						class="absolute right-0 top-0 hidden h-full rounded-s-none p-0 hover:bg-transparent group-hover:block"
+					>
+						<ChevronRight class="size-16" />
+					</Button>
+				</div>
+			</div>
+		</div>
+	{/if}
+{/snippet}
+
 {#snippet sideInfo()}
 	<div class="mb-8 text-center sm:text-left">
 		<div class="mb-4 text-4xl md:text-5xl">
@@ -62,70 +125,6 @@
 			</Table.Row>
 		</Table.Body>
 	</Table.Root>
-{/snippet}
-
-<Card.Root class="flex h-full flex-col rounded-lg border-2 bg-accent">
-	<Card.Header class="p-4 lg:p-20 lg:pt-8">
-		<Card.Title class="mb-4 mt-2 text-center text-3xl sm:text-4xl md:mb-10 md:mt-6 lg:text-5xl"
-			>{data?.product?.title}</Card.Title
-		>
-		<div class="grid gap-12 sm:grid-cols-[1fr_auto]">
-			{@render pictures()}
-			<div>
-				{@render sideInfo()}
-			</div>
-		</div>
-		<h3 class="py-6 text-2xl font-bold xl:hidden">
-			{data?.product?.Description.description_short}
-		</h3>
-	</Card.Header>
-	<Card.Content class="flex h-full flex-grow flex-col px-4 pb-10 pt-0 lg:px-20">
-		<p class="description">{@html data?.product?.Description.description_long}</p>
-	</Card.Content>
-</Card.Root>
-
-{#snippet pictures()}
-	{#if data?.product?.pictures}
-		<div class="flex flex-col-reverse gap-4 md:flex-row">
-			<ul class="flex gap-4 md:flex-col">
-				{#each data.product.pictures as picture, i}
-					<li>
-						<button aria-label="picture" onclick={() => (activePicture = i)}>
-							<img
-								src="/productPics/{picture}"
-								alt="product"
-								class="size-16 rounded-lg shadow-primary md:size-24 lg:size-32"
-								class:shadow-sm={i === activePicture}
-							/>
-						</button>
-					</li>
-				{/each}
-			</ul>
-			<div class="group relative flex-grow">
-				<div class="relative">
-					<img
-						src="/productPics/{data?.product?.pictures[activePicture]}"
-						class="size-full rounded-lg shadow-sm shadow-primary lg:size-[32rem]"
-						alt="product"
-					/>
-					<Button
-						variant="ghost"
-						onclick={() => setActivePicture(-1)}
-						class="absolute left-0 top-0 hidden h-full rounded-e-none p-0 hover:bg-transparent group-hover:block"
-					>
-						<ChevronLeft class="size-16" />
-					</Button>
-					<Button
-						variant="ghost"
-						onclick={() => setActivePicture(1)}
-						class="absolute right-0 top-0 hidden h-full rounded-s-none p-0 hover:bg-transparent group-hover:block"
-					>
-						<ChevronRight class="size-16" />
-					</Button>
-				</div>
-			</div>
-		</div>
-	{/if}
 {/snippet}
 
 {#snippet stars()}
