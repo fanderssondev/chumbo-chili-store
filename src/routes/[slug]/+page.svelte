@@ -24,7 +24,7 @@
 
 <!-- BUG fix responsiveness -->
 {#snippet sideInfo()}
-	<div class="mb-8 items-center justify-between text-center">
+	<div class="mb-8 text-center sm:text-left">
 		<div class="mb-4 text-4xl md:text-5xl">
 			{currencyFormatter(data?.product?.price ?? 0)}
 		</div>
@@ -40,77 +40,61 @@
 			</p>
 		</div>
 	{/if}
-	<div class="">
-		<Table.Root>
-			<Table.Body>
-				<Table.Row>
-					<Table.Cell class="py-1 pl-0 pr-4 text-lg">Hotness</Table.Cell>
-					<Table.Cell class="px-0 py-1 text-lg"
-						>{data?.product?.ProductDetails.hotness}/10</Table.Cell
-					>
-				</Table.Row>
-				<Table.Row>
-					<Table.Cell class="py-1 pl-0 pr-4 text-lg">Category</Table.Cell>
-					<Table.Cell class="px-0 py-1 text-lg">{data?.product?.ProductDetails.category}</Table.Cell
-					>
-				</Table.Row>
-				<Table.Row>
-					<Table.Cell class="py-1 pl-0 pr-4 text-lg">Manufacturer</Table.Cell>
-					<Table.Cell class="px-0 py-1 text-lg"
-						>{data?.product?.ProductDetails.manufacturer}</Table.Cell
-					>
-				</Table.Row>
-				<Table.Row>
-					<Table.Cell class="py-1 pl-0 pr-4 text-lg">Weight</Table.Cell>
-					<Table.Cell class="px-0 py-1 text-lg"
-						>{data?.product?.ProductDetails.weight.toFixed(2)}kg</Table.Cell
-					>
-				</Table.Row>
-			</Table.Body>
-		</Table.Root>
-		<!-- <p>Hotness: {data?.product?.ProductDetails.hotness}/10</p>
-		<p>Category: {data?.product?.ProductDetails.category}</p>
-		<p>Manufacturer: {data?.product?.ProductDetails.manufacturer}</p>
-		<p>Weight: {data?.product?.ProductDetails.weight.toFixed(2)}kg</p> -->
-	</div>
+	<Table.Root>
+		<Table.Body>
+			<Table.Row class="border-none">
+				<Table.Cell class="py-1 pl-0 pr-4">Hotness</Table.Cell>
+				<Table.Cell class="px-0 py-1">{data?.product?.ProductDetails.hotness}/10</Table.Cell>
+			</Table.Row>
+			<Table.Row class="border-none">
+				<Table.Cell class="py-1 pl-0 pr-4">Category</Table.Cell>
+				<Table.Cell class="px-0 py-1">{data?.product?.ProductDetails.category}</Table.Cell>
+			</Table.Row>
+			<Table.Row class="border-none">
+				<Table.Cell class="py-1 pl-0 pr-4">Manufacturer</Table.Cell>
+				<Table.Cell class="px-0 py-1">{data?.product?.ProductDetails.manufacturer}</Table.Cell>
+			</Table.Row>
+			<Table.Row class="border-none">
+				<Table.Cell class="py-1 pl-0 pr-4">Weight</Table.Cell>
+				<Table.Cell class="px-0 py-1"
+					>{data?.product?.ProductDetails.weight.toFixed(2)}kg</Table.Cell
+				>
+			</Table.Row>
+		</Table.Body>
+	</Table.Root>
 {/snippet}
 
 <Card.Root class="flex h-full flex-col rounded-lg border-2 bg-accent">
-	<Card.Header class="p-4 lg:p-20">
-		<Card.Title class="mb-10 text-center text-3xl sm:text-4xl md:text-5xl"
+	<Card.Header class="p-4 lg:p-20 lg:pt-8">
+		<Card.Title class="mb-4 mt-2 text-center text-3xl sm:text-4xl md:mb-10 md:mt-6 lg:text-5xl"
 			>{data?.product?.title}</Card.Title
 		>
-		<div class="grid gap-16 sm:grid-cols-[1fr_auto] lg:gap-24">
+		<div class="grid gap-12 sm:grid-cols-[1fr_auto]">
 			{@render pictures()}
-			<div class="flex flex-col justify-between">
-				<!-- <div class="hidden text-lg xl:block">
-					{data?.product?.Description.description_short}
-				</div> -->
-				<div class="">
-					{@render sideInfo()}
-				</div>
+			<div>
+				{@render sideInfo()}
 			</div>
 		</div>
-		<div class="pt-6 text-lg xl:hidden">
+		<h3 class="py-6 text-2xl font-bold xl:hidden">
 			{data?.product?.Description.description_short}
-		</div>
+		</h3>
 	</Card.Header>
-	<Card.Content class="flex h-full flex-grow flex-col px-10 pb-10 pt-0 lg:px-20">
-		<p class="flex-grow">{@html data?.product?.Description.description_long}</p>
+	<Card.Content class="flex h-full flex-grow flex-col px-4 pb-10 pt-0 lg:px-20">
+		<p class="description">{@html data?.product?.Description.description_long}</p>
 	</Card.Content>
 </Card.Root>
 
 {#snippet pictures()}
 	{#if data?.product?.pictures}
-		<div class="flex flex-col-reverse gap-4 sm:flex-row">
-			<ul class="flex gap-4 sm:flex-col">
+		<div class="flex flex-col-reverse gap-4 md:flex-row">
+			<ul class="flex gap-4 md:flex-col">
 				{#each data.product.pictures as picture, i}
 					<li>
 						<button aria-label="picture" onclick={() => (activePicture = i)}>
 							<img
 								src="/productPics/{picture}"
 								alt="product"
-								class="size-16 rounded-lg shadow-primary"
+								class="size-16 rounded-lg shadow-primary md:size-24 lg:size-32"
 								class:shadow-sm={i === activePicture}
 							/>
 						</button>
@@ -121,7 +105,7 @@
 				<div class="relative">
 					<img
 						src="/productPics/{data?.product?.pictures[activePicture]}"
-						class="size-full rounded-lg shadow-sm shadow-primary"
+						class="size-full rounded-lg shadow-sm shadow-primary lg:size-[32rem]"
 						alt="product"
 					/>
 					<Button
@@ -185,3 +169,17 @@
 		{/each}
 	</svg>
 {/snippet}
+
+<style>
+	:global(.description h2) {
+		@apply mb-4 text-xl font-semibold;
+	}
+
+	:global(.description h3, description h4) {
+		@apply mb-4 text-lg font-semibold;
+	}
+
+	:global(.description p:not(:has(+ ul))) {
+		@apply mb-2;
+	}
+</style>
