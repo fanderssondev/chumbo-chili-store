@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index';
 	import * as Card from '$lib/components/ui/card/index';
+	import * as Table from '$lib/components/ui/table';
 	import { ChevronLeft, ChevronRight } from 'svelte-radix';
 	import { currencyFormatter } from '$lib/utils/utils';
 
@@ -21,16 +22,73 @@
 	};
 </script>
 
+<!-- BUG fix responsiveness -->
+{#snippet sideInfo()}
+	<div class="mb-8 items-center justify-between text-center">
+		<div class="mb-4 text-4xl md:text-5xl">
+			{currencyFormatter(data?.product?.price ?? 0)}
+		</div>
+		<Button size="lg" class="w-full text-xl">Add to Cart</Button>
+	</div>
+	{#if (data?.product?.ProductDetails?.Rating?.nr_of_reviews ?? 0) > 0}
+		<div class="mb-4">
+			{@render stars()}
+
+			<p class="text-sm text-muted-foreground">
+				{data?.product?.ProductDetails.Rating.nr_of_reviews}
+				{data?.product?.ProductDetails?.Rating?.nr_of_reviews === 1 ? 'review' : 'reviews'}
+			</p>
+		</div>
+	{/if}
+	<div class="">
+		<Table.Root>
+			<Table.Body>
+				<Table.Row>
+					<Table.Cell class="py-1 pl-0 pr-4 text-lg">Hotness</Table.Cell>
+					<Table.Cell class="px-0 py-1 text-lg"
+						>{data?.product?.ProductDetails.hotness}/10</Table.Cell
+					>
+				</Table.Row>
+				<Table.Row>
+					<Table.Cell class="py-1 pl-0 pr-4 text-lg">Category</Table.Cell>
+					<Table.Cell class="px-0 py-1 text-lg">{data?.product?.ProductDetails.category}</Table.Cell
+					>
+				</Table.Row>
+				<Table.Row>
+					<Table.Cell class="py-1 pl-0 pr-4 text-lg">Manufacturer</Table.Cell>
+					<Table.Cell class="px-0 py-1 text-lg"
+						>{data?.product?.ProductDetails.manufacturer}</Table.Cell
+					>
+				</Table.Row>
+				<Table.Row>
+					<Table.Cell class="py-1 pl-0 pr-4 text-lg">Weight</Table.Cell>
+					<Table.Cell class="px-0 py-1 text-lg"
+						>{data?.product?.ProductDetails.weight.toFixed(2)}kg</Table.Cell
+					>
+				</Table.Row>
+			</Table.Body>
+		</Table.Root>
+		<!-- <p>Hotness: {data?.product?.ProductDetails.hotness}/10</p>
+		<p>Category: {data?.product?.ProductDetails.category}</p>
+		<p>Manufacturer: {data?.product?.ProductDetails.manufacturer}</p>
+		<p>Weight: {data?.product?.ProductDetails.weight.toFixed(2)}kg</p> -->
+	</div>
+{/snippet}
+
 <Card.Root class="flex h-full flex-col rounded-lg border-2 bg-accent">
-	<Card.Header class="p-10 lg:p-20">
-		<Card.Title class="mb-10 text-5xl">{data?.product?.title}</Card.Title>
-		<div class="grid gap-8 sm:grid-cols-[auto_1fr]">
+	<Card.Header class="p-4 lg:p-20">
+		<Card.Title class="mb-10 text-center text-3xl sm:text-4xl md:text-5xl"
+			>{data?.product?.title}</Card.Title
+		>
+		<div class="grid gap-16 sm:grid-cols-[1fr_auto] lg:gap-24">
 			{@render pictures()}
 			<div class="flex flex-col justify-between">
-				<div class="hidden text-lg xl:block">
+				<!-- <div class="hidden text-lg xl:block">
 					{data?.product?.Description.description_short}
+				</div> -->
+				<div class="">
+					{@render sideInfo()}
 				</div>
-				{@render sideInfo()}
 			</div>
 		</div>
 		<div class="pt-6 text-lg xl:hidden">
@@ -44,8 +102,8 @@
 
 {#snippet pictures()}
 	{#if data?.product?.pictures}
-		<div class="flex flex-row gap-4">
-			<ul class="flex flex-col gap-4">
+		<div class="flex flex-col-reverse gap-4 sm:flex-row">
+			<ul class="flex gap-4 sm:flex-col">
 				{#each data.product.pictures as picture, i}
 					<li>
 						<button aria-label="picture" onclick={() => (activePicture = i)}>
@@ -60,10 +118,10 @@
 				{/each}
 			</ul>
 			<div class="group relative flex-grow">
-				<div class="relative inline-block">
+				<div class="relative">
 					<img
 						src="/productPics/{data?.product?.pictures[activePicture]}"
-						class="size-80 rounded-lg shadow-sm shadow-primary"
+						class="size-full rounded-lg shadow-sm shadow-primary"
 						alt="product"
 					/>
 					<Button
@@ -84,35 +142,6 @@
 			</div>
 		</div>
 	{/if}
-{/snippet}
-
-<!-- BUG fix responsiveness -->
-{#snippet sideInfo()}
-	<div class="flex items-end justify-between sm:flex-col">
-		<div class=" flex w-full justify-between self-end sm:flex-col">
-			<div class="">
-				<p>Hotness: {data?.product?.ProductDetails.hotness}/10</p>
-				<p>Category: {data?.product?.ProductDetails.category}</p>
-				<p>Manufaturer: {data?.product?.ProductDetails.manufacturer}</p>
-				<p>Weight: {data?.product?.ProductDetails.weight}kg</p>
-				{#if (data?.product?.ProductDetails?.Rating?.nr_of_reviews ?? 0) > 0}
-					<div class="">
-						{@render stars()}
-					</div>
-					<p class="hidden sm:inline-block">
-						{data?.product?.ProductDetails.Rating.nr_of_reviews}
-						{data?.product?.ProductDetails?.Rating?.nr_of_reviews === 1 ? 'review' : 'reviews'}
-					</p>
-				{/if}
-			</div>
-			<div class="flex flex-col">
-				<div class="text-4xl md:text-5xl">
-					{currencyFormatter(data?.product?.price ?? 0)}
-				</div>
-				<Button variant="default">Add to Cart</Button>
-			</div>
-		</div>
-	</div>
 {/snippet}
 
 {#snippet stars()}
