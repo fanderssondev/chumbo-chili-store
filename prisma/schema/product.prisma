@@ -1,43 +1,36 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 model Description {
-  id                String   @id
+  id                String   @id @default(uuid())
   description_short String
   description_long  String
   Product           Product?
 }
 
 model Product {
-  id              String         @id
+  id              String         @id @default(uuid())
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime
   title           String
   sku             String         @unique
   slug            String         @unique
   price           Float
   pictures        String[]
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime
+  isPublished     Boolean        @default(true)
   descriptionId   String         @unique
   productDetailId String         @unique
   Description     Description    @relation(fields: [descriptionId], references: [id])
   ProductDetails  ProductDetails @relation(fields: [productDetailId], references: [id])
+  orderItems      OrderItem[]
 }
 
 model Rating {
-  id             String          @id
+  id             String          @id @default(uuid())
   average        Float
   nr_of_reviews  Int
   ProductDetails ProductDetails?
 }
 
 model ProductDetails {
-  id           String   @id
+  id           String   @id @default(uuid())
   category     String
   manufacturer String
   hotness      Float

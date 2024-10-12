@@ -1,0 +1,15 @@
+model Order {
+  id         String      @id @default(uuid())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime
+  orderItems OrderItem[]
+}
+
+model OrderItem {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime
+  count     Int
+  products  Product[]
+  order     Order[]
+}
