@@ -7,7 +7,7 @@
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import * as Sheet from '$lib/components/ui/sheet';
 
-	const { children } = $props();
+	const { data, children } = $props();
 
 	let theme = useTheme();
 
@@ -75,14 +75,51 @@
 	</Sheet.Root>
 {/snippet}
 
+{#snippet headerButtonSection()}
+	<Button variant="link" size="icon" class="relative size-14 rounded-full hover:bg-primary/10">
+		<a href="/cart">
+			<svg class="size-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+				><g
+					fill="none"
+					stroke="currentColor"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path
+						d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
+					/></g
+				>
+			</svg>
+			{#if data.numberOfItemsInCart > 0}
+				<div class="absolute right-0 top-1 size-5 rounded-full bg-orange-500 dark:bg-orange-600">
+					{data.numberOfItemsInCart}
+				</div>
+			{/if}
+		</a>
+	</Button>
+	<Button variant="default">Sign in</Button>
+	<Button
+		on:click={theme.toggleDarkmode}
+		variant="outline"
+		size="icon"
+		class="rounded-full border-none bg-transparent hover:bg-primary/10"
+	>
+		<Sun class="size-6 rotate-0 scale-0 transition-all dark:-rotate-90 dark:scale-100" />
+		<Moon
+			class="dark:rotate-270 absolute size-6 -rotate-90 scale-100 transition-all dark:scale-0"
+		/>
+		<span class="sr-only">Toggle theme</span>
+	</Button>
+{/snippet}
+
 <header class="border-b-2 bg-accent text-secondary-foreground">
-	<div class="container flex items-center justify-between px-0 pl-4 sm:px-4">
-		<div class="flex items-center gap-2">
+	<div class="container flex items-center justify-between py-1 pl-4 pr-0 md:px-8">
+		<a href="/" class="flex items-center gap-2">
 			<img class="size-8 md:size-12" src="/chumbo-logo.svg" alt="logo" />
 			<h1 class="font-dosis text-2xl font-bold tracking-wide text-orange-500 md:text-5xl">
 				Chumbo
 			</h1>
-		</div>
+		</a>
 		<div class="md:hidden">
 			{@render hamburgerMenu()}
 		</div>
@@ -162,33 +199,3 @@
 		<a href="https://github.com/fanderssondev">Fredrik Andersson</a> | All Rights Reserved
 	</p>
 </footer>
-
-{#snippet headerButtonSection()}
-	<Button variant="default">Sign in</Button>
-	<Button variant="ghost">
-		<svg class="size-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-			><g
-				fill="none"
-				stroke="currentColor"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				stroke-width="2"
-				><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path
-					d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
-				/></g
-			></svg
-		>
-	</Button>
-	<Button
-		on:click={theme.toggleDarkmode}
-		variant="outline"
-		size="icon"
-		class="rounded-full border-none bg-transparent hover:bg-secondary"
-	>
-		<Sun class="size-6 rotate-0 scale-0 transition-all dark:-rotate-90 dark:scale-100" />
-		<Moon
-			class="dark:rotate-270 absolute size-6 -rotate-90 scale-100 transition-all dark:scale-0"
-		/>
-		<span class="sr-only">Toggle theme</span>
-	</Button>
-{/snippet}
