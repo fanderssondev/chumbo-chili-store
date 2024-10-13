@@ -9,6 +9,7 @@ export const load: PageServerLoad = async ({ params }) => {
 				slug: params.slug
 			},
 			select: {
+				id: true,
 				title: true,
 				price: true,
 				pictures: true,

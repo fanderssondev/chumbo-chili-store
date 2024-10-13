@@ -90,9 +90,9 @@
 					/></g
 				>
 			</svg>
-			{#if data.numberOfItemsInCart > 0}
+			{#if data.getNrOfItems() > 0}
 				<div class="absolute right-0 top-1 size-5 rounded-full bg-orange-500 dark:bg-orange-600">
-					{data.numberOfItemsInCart}
+					{data.getNrOfItems()}
 				</div>
 			{/if}
 		</a>

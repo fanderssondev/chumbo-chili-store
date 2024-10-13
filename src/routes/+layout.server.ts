@@ -1,12 +1,12 @@
 import type { LayoutServerLoad } from './$types';
+import { storedCart } from '$lib/stores/useLocalStorage.svelte';
 
-
-// TODO Implement Cart item load
-const numberOfItemsInCart = 3;
 
 export const load: LayoutServerLoad = async () => {
+  const { getNrOfItems } = storedCart();
+
   return {
-    numberOfItemsInCart
+    getNrOfItems
   };
 
 };
