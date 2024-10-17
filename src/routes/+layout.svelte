@@ -6,8 +6,16 @@
 	import { useTheme } from '$lib/stores/useTheme.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import * as Sheet from '$lib/components/ui/sheet';
+	import { storedCart } from '$lib/stores/useLocalStorageCart.svelte';
 
-	const { data, children } = $props();
+	const { cart, getNrOfItems } = storedCart();
+	const { children } = $props();
+
+	let nrOfItems = $derived(cart.reduce((total, item) => item.count + total, 0) ?? 0);
+
+	// let newNumber = $derived(data.nrOfItems + 3);
+
+	$inspect(nrOfItems);
 
 	let theme = useTheme();
 
@@ -90,11 +98,9 @@
 					/></g
 				>
 			</svg>
-			{#if data.getNrOfItems() > 0}
-				<div class="absolute right-0 top-1 size-5 rounded-full bg-orange-500 dark:bg-orange-600">
-					{data.getNrOfItems()}
-				</div>
-			{/if}
+			<div class="absolute right-0 top-1 size-5 rounded-full bg-orange-500 dark:bg-orange-600">
+				{nrOfItems}
+			</div>
 		</a>
 	</Button>
 	<Button variant="default">Sign in</Button>
@@ -128,6 +134,10 @@
 		</div>
 	</div>
 </header>
+
+<pre>
+	 {JSON.stringify(cart, null, 2)}
+</pre>
 
 <main class=" my-8 min-h-screen px-4 md:container lg:my-16">
 	{@render children()}

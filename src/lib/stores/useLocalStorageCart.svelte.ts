@@ -1,4 +1,5 @@
 import { browser } from '$app/environment';
+import { invalidate, invalidateAll } from '$app/navigation';
 import type { OrderItem } from '@prisma/client';
 
 type CartItem = Pick<OrderItem, 'id' | 'count'>;
@@ -12,11 +13,14 @@ export const storedCart = () => {
     { id: 'd8456cc6-f4ed-40b6-ab83-74052f1d4f87', count: 2 },
   ]);
 
+  let nrOfItems = $derived(cart.reduce((total, item) => item.count + total, 0) ?? 0);
+
   const incrementItem = (id: string) => {
-    const item = cart.find((c) => c.id == id);
-    if (item) {
-      item.count++;
-    }
+    cart.map((item) => {
+      if (item.id === id) {
+        item.count++;
+      }
+    });
   };
 
   const decrementItem = (id: string) => {
@@ -26,14 +30,20 @@ export const storedCart = () => {
     }
   };
 
+  const deleteItem = (id: string) => {
+    cart = cart.filter((item) => item.id !== id);
+  };
+
   const getNrOfItems = () => {
     return cart.reduce((total, item) => item.count + total, 0) ?? 0;
   };
 
   return {
     cart,
+    nrOfItems,
     incrementItem,
     decrementItem,
+    deleteItem,
     getNrOfItems
   };
 }
