@@ -1,19 +1,30 @@
 import type { PageServerLoad } from './$types';
+
 import { prisma } from '$lib/db/prisma';
-import { storedCart } from '$lib/stores/useLocalStorageCart.svelte';
 
-export const load: PageServerLoad = async ({ depends }) => {
+import { getCartId } from '$lib/stores/useLocalStorageCart.svelte';
 
-  const products = await prisma.product.findMany({
-    where: {
-      id: { in: storedCart.getAllIds }
-    }
-  });
+export const load: PageServerLoad = async () => {
 
-  depends('storedCart');
-  console.log(storedCart.getAllIds);
+  const cartId = getCartId();
 
-  return {
-    products
-  };
+  if (cartId) {
+    const order = await prisma.order.findUnique({
+      where: {
+        id: cartId
+      },
+      include: {
+        orderItems: {
+          include: {
+            product: true
+          }
+        }
+      }
+    });
+
+    return {
+      order
+    };
+  }
+
 };

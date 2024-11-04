@@ -7,8 +7,10 @@
 	type $$Props = PaginationPrimitive.NextButtonProps;
 	type $$Events = PaginationPrimitive.NextButtonEvents;
 
-	let className: $$Props["class"] = undefined;
-	export { className as class };
+	interface Props { [key: string]: any }
+
+	let { class: className = undefined, children, ...rest }: Props = $props();
+	
 </script>
 
 <PaginationPrimitive.NextButton asChild let:builder>
@@ -17,11 +19,11 @@
 		class={cn("gap-1 pr-2.5", className)}
 		builders={[builder]}
 		on:click
-		{...$$restProps}
+		{...rest}
 	>
-		<slot>
+		{#if children}{@render children()}{:else}
 			<span>Next</span>
 			<ChevronRight class="h-4 w-4" />
-		</slot>
+		{/if}
 	</Button>
 </PaginationPrimitive.NextButton>

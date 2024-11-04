@@ -6,9 +6,8 @@
 	import { useTheme } from '$lib/stores/useTheme.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import * as Sheet from '$lib/components/ui/sheet';
-	import { storedCart } from '$lib/stores/useLocalStorageCart.svelte';
 
-	const { children } = $props();
+	const { data, children } = $props();
 
 	let theme = useTheme();
 
@@ -92,7 +91,7 @@
 				>
 			</svg>
 			<div class="absolute right-0 top-1 size-5 rounded-full bg-orange-500 dark:bg-orange-600">
-				{storedCart.nrOfItems}
+				{data.totalNrInOrder}
 			</div>
 		</a>
 	</Button>

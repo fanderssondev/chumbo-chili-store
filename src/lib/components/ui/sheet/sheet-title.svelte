@@ -4,13 +4,15 @@
 
 	type $$Props = SheetPrimitive.TitleProps;
 
-	let className: $$Props["class"] = undefined;
-	export { className as class };
+	interface Props { [key: string]: any }
+
+	let { class: className = undefined, children, ...rest }: Props = $props();
+	
 </script>
 
 <SheetPrimitive.Title
 	class={cn("text-foreground text-lg font-semibold", className)}
-	{...$$restProps}
+	{...rest}
 >
-	<slot />
+	{@render children?.()}
 </SheetPrimitive.Title>

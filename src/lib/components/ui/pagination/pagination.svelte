@@ -5,15 +5,21 @@
 	type $$Props = PaginationPrimitive.Props;
 	type $$Events = PaginationPrimitive.Events;
 
-	let className: $$Props["class"] = undefined;
-	export let count: $$Props["count"] = 0;
-	export let perPage: $$Props["perPage"] = 10;
-	export let page: $$Props["page"] = 1;
-	export let siblingCount: $$Props["siblingCount"] = 1;
+	interface Props { [key: string]: any }
 
-	export { className as class };
+	let {
+		class: className = undefined,
+		count = 0,
+		perPage = 10,
+		page = $bindable(1),
+		siblingCount = 1,
+		children,
+		...rest
+	}: Props = $props();
 
-	$: currentPage = page;
+	
+
+	let currentPage = $derived(page);
 </script>
 
 <PaginationPrimitive.Root
@@ -25,9 +31,9 @@
 	let:pages
 	let:range
 	asChild
-	{...$$restProps}
+	{...rest}
 >
 	<nav {...builder} class={cn("mx-auto flex w-full flex-col items-center", className)}>
-		<slot {pages} {range} {currentPage} />
+		{@render children?.({ pages, range, currentPage, })}
 	</nav>
 </PaginationPrimitive.Root>

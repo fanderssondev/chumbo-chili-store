@@ -14,6 +14,7 @@ export const load: PageServerLoad = async ({ params }) => {
 				price: true,
 				pictures: true,
 				slug: true,
+				sku: true,
 				Description: {
 					select: {
 						description_short: true,

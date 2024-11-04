@@ -4,10 +4,12 @@
 
 	type $$Props = SheetPrimitive.DescriptionProps;
 
-	let className: $$Props["class"] = undefined;
-	export { className as class };
+	interface Props { [key: string]: any }
+
+	let { class: className = undefined, children, ...rest }: Props = $props();
+	
 </script>
 
-<SheetPrimitive.Description class={cn("text-muted-foreground text-sm", className)} {...$$restProps}>
-	<slot />
+<SheetPrimitive.Description class={cn("text-muted-foreground text-sm", className)} {...rest}>
+	{@render children?.()}
 </SheetPrimitive.Description>

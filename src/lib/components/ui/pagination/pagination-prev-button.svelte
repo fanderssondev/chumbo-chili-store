@@ -7,8 +7,10 @@
 	type $$Props = PaginationPrimitive.PrevButtonProps;
 	type $$Events = PaginationPrimitive.PrevButtonEvents;
 
-	let className: $$Props['class'] = undefined;
-	export { className as class };
+	interface Props { [key: string]: any }
+
+	let { class: className = undefined, children, ...rest }: Props = $props();
+	
 </script>
 
 <PaginationPrimitive.PrevButton asChild let:builder>
@@ -17,11 +19,11 @@
 		class={cn('gap-1 pl-2.5', className)}
 		builders={[builder]}
 		on:click
-		{...$$restProps}
+		{...rest}
 	>
-		<slot>
+		{#if children}{@render children()}{:else}
 			<ChevronLeft class="h-4 w-4" />
 			<span>Previous</span>
-		</slot>
+		{/if}
 	</Button>
 </PaginationPrimitive.PrevButton>

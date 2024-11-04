@@ -4,6 +4,7 @@
 	import * as Table from '$lib/components/ui/table';
 	import { ChevronLeft, ChevronRight } from 'svelte-radix';
 	import { currencyFormatter } from '$lib/utils/utils';
+	import { storedCart } from '$lib/stores/useLocalStorageCart.svelte.js';
 
 	let { data } = $props();
 
@@ -91,7 +92,9 @@
 		<div class="mb-4 text-4xl md:text-5xl">
 			{currencyFormatter(data?.product?.price ?? 0)}
 		</div>
-		<Button size="lg" class="w-full text-xl">Add to Cart</Button>
+		<Button size="lg" class="w-full text-xl" onclick={() => storedCart.addToCart(data.product?.id!)}
+			>Add to Cart</Button
+		>
 	</div>
 	{#if (data?.product?.ProductDetails?.Rating?.nr_of_reviews ?? 0) > 0}
 		<div class="mb-4">
@@ -105,6 +108,10 @@
 	{/if}
 	<Table.Root>
 		<Table.Body>
+			<Table.Row class="border-none">
+				<Table.Cell class="py-1 pl-0 pr-4">SKU</Table.Cell>
+				<Table.Cell class="px-0 py-1">{data?.product?.sku}</Table.Cell>
+			</Table.Row>
 			<Table.Row class="border-none">
 				<Table.Cell class="py-1 pl-0 pr-4">Hotness</Table.Cell>
 				<Table.Cell class="px-0 py-1">{data?.product?.ProductDetails.hotness}/10</Table.Cell>

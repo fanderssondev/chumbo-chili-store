@@ -4,10 +4,12 @@
 
 	type $$Props = HTMLAttributes<HTMLTableSectionElement>;
 
-	let className: $$Props["class"] = undefined;
-	export { className as class };
+	interface Props { [key: string]: any }
+
+	let { class: className = undefined, children, ...rest }: Props = $props();
+	
 </script>
 
-<tfoot class={cn("bg-primary text-primary-foreground font-medium", className)} {...$$restProps}>
-	<slot />
+<tfoot class={cn("bg-primary text-primary-foreground font-medium", className)} {...rest}>
+	{@render children?.()}
 </tfoot>
