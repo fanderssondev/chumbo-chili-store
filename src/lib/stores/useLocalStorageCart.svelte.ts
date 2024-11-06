@@ -1,9 +1,14 @@
 import { browser } from '$app/environment';
 
 export const getCartId = () => {
+  let cartId;
+
   if (browser) {
-    return localStorage.getItem('cartId');
+    cartId = localStorage.getItem('cartId');
   }
-  return '204404a5-1d5f-4566-ac3f-54357cd5c022';
+
+
+
+  return '2fff2af4-df53-481a-bdd8-fa582c90249f';
 };
 

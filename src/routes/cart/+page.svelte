@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card/index';
 	import Minus from '$lib/icons/minus.svelte';
@@ -49,9 +50,27 @@
 								</p>
 							</div>
 							<div>
-								<Button><Minus /></Button>
-								<Button><Plus /></Button>
-								<Button variant="destructive"><Trash /></Button>
+								<form method="post" use:enhance>
+									<Button
+										type="submit"
+										formaction="?/decrement"
+										name={'productId'}
+										value={item.productId}><Minus /></Button
+									>
+									<Button
+										type="submit"
+										formaction="?/increment"
+										name={'productId'}
+										value={item.productId}><Plus /></Button
+									>
+									<Button
+										type="submit"
+										formaction="?/delete"
+										variant="destructive"
+										name={'orderItemId'}
+										value={item.id}><Trash /></Button
+									>
+								</form>
 							</div>
 						</Card.Content>
 					</Card.Root>

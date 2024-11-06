@@ -78,8 +78,8 @@
 {#snippet headerButtonSection()}
 	<Button variant="link" size="icon" class="relative size-14 rounded-full hover:bg-primary/10">
 		<a href="/cart">
-			<svg class="size-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-				><g
+			<svg class="size-16" viewBox="0 0 24 24">
+				<g
 					fill="none"
 					stroke="currentColor"
 					stroke-linecap="round"
@@ -97,7 +97,7 @@
 	</Button>
 	<Button variant="default">Sign in</Button>
 	<Button
-		on:click={theme.toggleDarkmode}
+		onclick={theme.toggleDarkmode}
 		variant="outline"
 		size="icon"
 		class="rounded-full border-none bg-transparent hover:bg-primary/10"

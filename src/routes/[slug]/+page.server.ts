@@ -1,6 +1,7 @@
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 
 import { prisma } from '$lib/db/prisma';
+import { getCartId } from '$lib/stores/useLocalStorageCart.svelte';
 
 export const load: PageServerLoad = async ({ params }) => {
 	return {
@@ -38,4 +39,45 @@ export const load: PageServerLoad = async ({ params }) => {
 			}
 		})
 	};
+};
+
+export const actions: Actions = {
+	default: async ({ request }) => {
+		const data = await request.formData();
+		const productId = data.get('productId') as string;
+
+		const cartId = getCartId();
+
+		const order = await prisma.order.upsert({
+			where: {
+				id: cartId
+			},
+			update: {
+				orderItems: {
+					upsert: {
+						where: {
+							productId
+						},
+						update: {
+							count: {
+								increment: 1
+							}
+						},
+						create: {
+							productId
+						}
+					}
+				}
+			},
+			create: {
+				// TODO Implement create new order
+				orderItems: {
+					create: {
+						productId
+					}
+				}
+			}
+		});
+		// console.log(order);
+	}
 };

@@ -9,8 +9,9 @@ model OrderItem {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  count     Int
+  count     Int      @default(1)
   product   Product  @relation(fields: [productId], references: [id])
-  productId String
-  order     Order[]
+  productId String   @unique
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
 }

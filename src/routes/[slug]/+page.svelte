@@ -1,10 +1,9 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { Button } from '$lib/components/ui/button/index';
 	import * as Card from '$lib/components/ui/card/index';
 	import * as Table from '$lib/components/ui/table';
-	import { ChevronLeft, ChevronRight } from 'svelte-radix';
 	import { currencyFormatter } from '$lib/utils/utils';
-	import { storedCart } from '$lib/stores/useLocalStorageCart.svelte.js';
 
 	let { data } = $props();
 
@@ -72,14 +71,14 @@
 						onclick={() => setActivePicture(-1)}
 						class="absolute left-0 top-0 hidden h-full rounded-e-none p-0 hover:bg-transparent group-hover:block"
 					>
-						<ChevronLeft class="size-16" />
+						<!-- BUG <ChevronLeft class="size-16" /> -->
 					</Button>
 					<Button
 						variant="ghost"
 						onclick={() => setActivePicture(1)}
 						class="absolute right-0 top-0 hidden h-full rounded-s-none p-0 hover:bg-transparent group-hover:block"
 					>
-						<ChevronRight class="size-16" />
+						<!-- BUG <ChevronRight class="size-16" /> -->
 					</Button>
 				</div>
 			</div>
@@ -92,9 +91,16 @@
 		<div class="mb-4 text-4xl md:text-5xl">
 			{currencyFormatter(data?.product?.price ?? 0)}
 		</div>
-		<Button size="lg" class="w-full text-xl" onclick={() => storedCart.addToCart(data.product?.id!)}
-			>Add to Cart</Button
-		>
+		<form method="post" use:enhance>
+			<input type="hidden" name="productId" value={data.product?.id} />
+			<Button
+				type="submit"
+				size="lg"
+				class="w-full text-xl"
+				name="productId"
+				value={data.product?.id}>Add to Cart</Button
+			>
+		</form>
 	</div>
 	{#if (data?.product?.ProductDetails?.Rating?.nr_of_reviews ?? 0) > 0}
 		<div class="mb-4">
