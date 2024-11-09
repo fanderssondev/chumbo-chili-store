@@ -2,12 +2,8 @@ import type { Actions, PageServerLoad } from './$types';
 
 import { prisma } from '$lib/db/prisma';
 
-import { getCartId } from '$lib/stores/useLocalStorageCart.svelte';
-
-const cartId = getCartId();
-
-export const load: PageServerLoad = async () => {
-
+export const load: PageServerLoad = async ({ cookies }) => {
+  const cartId = cookies.get('cartId');
 
   if (cartId) {
     const order = await prisma.order.findUnique({
@@ -34,11 +30,13 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-  decrement: async ({ request }) => {
+  decrement: async ({ request, cookies }) => {
     const data = await request.formData();
     const productId = data.get('productId') as string;
 
-    await prisma.$transaction([
+    const cartId = cookies.get('cartId');
+
+    const res = await prisma.$transaction([
       prisma.order.update({
         where: {
           id: cartId
@@ -73,17 +71,20 @@ export const actions: Actions = {
           orderItems: {
             none: {} // Checks if there are no order items left in the order
           }
-        }
+        },
       })
     ]);
+    if (res[2].count > 0) {
+      cookies.delete('cartId', { path: '/' });
+    }
   },
-  increment: async ({ request }) => {
+  increment: async ({ request, cookies }) => {
     const data = await request.formData();
     const productId = data.get('productId') as string;
 
     await prisma.order.update({
       where: {
-        id: cartId
+        id: cookies.get('cartId')
       },
       data: {
         orderItems: {
@@ -101,21 +102,36 @@ export const actions: Actions = {
       }
     });
   },
-  delete: async ({ request }) => {
+  delete: async ({ request, cookies }) => {
     const data = await request.formData();
     const orderItemId = data.get('orderItemId') as string;
 
-    await prisma.order.update({
-      where: {
-        id: cartId
-      },
-      data: {
-        orderItems: {
-          delete: {
-            id: orderItemId
+    const cartId = cookies.get('cartId');
+
+    const res = await prisma.$transaction([
+      prisma.order.update({
+        where: {
+          id: cartId,
+        },
+        data: {
+          orderItems: {
+            delete: {
+              id: orderItemId
+            }
           }
         }
-      }
-    });
+      }),
+      prisma.order.deleteMany({
+        where: {
+          id: cartId,
+          orderItems: {
+            none: {} // Checks if there are no order items left in the order
+          }
+        },
+      })
+    ]);
+    if (res[1].count > 0) {
+      cookies.delete('cartId', { path: '/' });
+    }
   }
 };

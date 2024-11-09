@@ -18,7 +18,7 @@
     </pre>
 
 		<!-- <pre>
-			 {JSON.stringify(
+			{JSON.stringify(
 				data.products.map((i) => i.id),
 				null,
 				2

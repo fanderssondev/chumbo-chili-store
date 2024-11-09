@@ -2,12 +2,9 @@ import type { LayoutServerLoad } from './$types';
 
 import { prisma } from '$lib/db/prisma';
 
-import { getCartId } from '$lib/stores/useLocalStorageCart.svelte';
-
-
 // TODO Implement loading of dynamic orders
-export const load: LayoutServerLoad = async () => {
-  const cartId = getCartId();
+export const load: LayoutServerLoad = async ({ cookies }) => {
+  const cartId = cookies.get('cartId');
 
   if (cartId) {
     const order = await prisma.order.findUnique({

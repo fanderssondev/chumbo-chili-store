@@ -1,7 +1,7 @@
 import type { Actions, PageServerLoad } from './$types';
+import type { Order } from '@prisma/client';
 
 import { prisma } from '$lib/db/prisma';
-import { getCartId } from '$lib/stores/useLocalStorageCart.svelte';
 
 export const load: PageServerLoad = async ({ params }) => {
 	return {
@@ -42,13 +42,30 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ request }) => {
+	default: async ({ request, cookies }) => {
 		const data = await request.formData();
 		const productId = data.get('productId') as string;
 
-		const cartId = getCartId();
+		// cookies.delete('cartId', { path: '/' });
+		let cartId = cookies.get('cartId');
+		console.log(cartId);
+		let order: Order | undefined;
 
-		const order = await prisma.order.upsert({
+
+		if (!cartId) {
+			console.log('creating order');
+			order = await prisma.order.create({
+				data: {
+
+				}
+			});
+			cartId = order.id;
+			cookies.set('cartId', order.id, { path: '/' });
+		}
+
+
+
+		order = await prisma.order.upsert({
 			where: {
 				id: cartId
 			},
@@ -78,6 +95,5 @@ export const actions: Actions = {
 				}
 			}
 		});
-		// console.log(order);
 	}
 };

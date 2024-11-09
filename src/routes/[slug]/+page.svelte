@@ -170,6 +170,7 @@
 			/>
 
 			<!-- Star fill using the clipPath for partial fill -->
+			<!-- BUG doesn't color stars -->
 			<path
 				d="M{13 + i * 28} 1L{16.708 + i * 28} 8.89905L{25 + i * 28} 10.1735L{19 +
 					i * 28} 16.3186L{20.416 + i * 28} 25L{13 + i * 28} 20.8991L{5.584 + i * 28} 25L{7 +
