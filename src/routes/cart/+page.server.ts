@@ -38,28 +38,44 @@ export const actions: Actions = {
     const data = await request.formData();
     const productId = data.get('productId') as string;
 
-    // BUG Doesn't delete when count hits zero, can get negative value
-    const order = await prisma.order.update({
-      where: {
-        id: cartId
-      },
-      data: {
-        orderItems: {
-          update: {
-            where: {
-              productId
-            },
-            data: {
-              count: {
-                decrement: 1
+    await prisma.$transaction([
+      prisma.order.update({
+        where: {
+          id: cartId
+        },
+        data: {
+          orderItems: {
+            update: {
+              where: {
+                productId
+              },
+              data: {
+                count: {
+                  decrement: 1
+                }
               }
             }
           }
         }
-      }
-    });
-
-    console.log(order);
+      }),
+      prisma.orderItem.deleteMany({
+        where: {
+          orderId: cartId,
+          productId: productId,
+          count: {
+            lte: 0
+          }
+        }
+      }),
+      prisma.order.deleteMany({
+        where: {
+          id: cartId,
+          orderItems: {
+            none: {} // Checks if there are no order items left in the order
+          }
+        }
+      })
+    ]);
   },
   increment: async ({ request }) => {
     const data = await request.formData();

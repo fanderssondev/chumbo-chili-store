@@ -9,6 +9,6 @@ export const getCartId = () => {
 
 
 
-  return '2fff2af4-df53-481a-bdd8-fa582c90249f';
+  return 'a4bdfc98-c0ce-4da7-92b3-691a45421121';
 };
 
