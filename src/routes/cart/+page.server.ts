@@ -69,7 +69,7 @@ export const actions: Actions = {
         where: {
           id: cartId,
           orderItems: {
-            none: {} // Checks if there are no order items left in the order
+            none: {}
           }
         },
       })
@@ -125,7 +125,7 @@ export const actions: Actions = {
         where: {
           id: cartId,
           orderItems: {
-            none: {} // Checks if there are no order items left in the order
+            none: {}
           }
         },
       })

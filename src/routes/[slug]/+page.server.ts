@@ -45,25 +45,17 @@ export const actions: Actions = {
 	default: async ({ request, cookies }) => {
 		const data = await request.formData();
 		const productId = data.get('productId') as string;
-
-		// cookies.delete('cartId', { path: '/' });
 		let cartId = cookies.get('cartId');
-		console.log(cartId);
+
 		let order: Order | undefined;
 
-
 		if (!cartId) {
-			console.log('creating order');
 			order = await prisma.order.create({
-				data: {
-
-				}
+				data: {}
 			});
 			cartId = order.id;
 			cookies.set('cartId', order.id, { path: '/' });
 		}
-
-
 
 		order = await prisma.order.upsert({
 			where: {
@@ -87,7 +79,6 @@ export const actions: Actions = {
 				}
 			},
 			create: {
-				// TODO Implement create new order
 				orderItems: {
 					create: {
 						productId

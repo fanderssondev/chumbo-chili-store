@@ -76,24 +76,25 @@
 {/snippet}
 
 {#snippet headerButtonSection()}
-	<Button variant="link" size="icon" class="relative size-14 rounded-full hover:bg-primary/10">
-		<a href="/cart">
-			<svg class="size-16" viewBox="0 0 24 24">
-				<g
-					fill="none"
-					stroke="currentColor"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path
-						d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
-					/></g
-				>
-			</svg>
-			<div class="absolute right-0 top-1 size-5 rounded-full bg-orange-500 dark:bg-orange-600">
-				{data.totalNrInOrder}
-			</div>
-		</a>
+	<Button variant="link" href="/cart" class="relative size-14 rounded-full hover:bg-primary/10">
+		<svg class="size-6" viewBox="0 0 24 24">
+			<g
+				fill="none"
+				stroke="currentColor"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				stroke-width="2"
+			>
+				<circle cx="8" cy="21" r="1" />
+				<circle cx="19" cy="21" r="1" />
+				<path
+					d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
+				/>
+			</g>
+		</svg>
+		<div class="absolute right-0 top-1 size-5 rounded-full bg-orange-500 dark:bg-orange-600">
+			{data.totalNrInOrder}
+		</div>
 	</Button>
 	<Button variant="default">Sign in</Button>
 	<Button
