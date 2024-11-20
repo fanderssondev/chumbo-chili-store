@@ -7,19 +7,19 @@ model Description {
 
 model Product {
   id              String         @id @default(uuid())
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime
   title           String
   sku             String         @unique
   slug            String         @unique
   price           Float
   pictures        String[]
-  isPublished     Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime
   descriptionId   String         @unique
   productDetailId String         @unique
+  isPublished     Boolean        @default(true)
+  orderItems      OrderItem?
   Description     Description    @relation(fields: [descriptionId], references: [id])
   ProductDetails  ProductDetails @relation(fields: [productDetailId], references: [id])
-  orderItems      OrderItem[]
 }
 
 model Rating {

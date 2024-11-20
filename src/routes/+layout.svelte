@@ -1,7 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-	import Sun from 'lucide-svelte/icons/sun';
-	import Moon from 'lucide-svelte/icons/moon';
+	import { Sun, Moon, ShoppingCart, Menu } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { useTheme } from '$lib/stores/useTheme.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
@@ -39,22 +38,7 @@
 	<Sheet.Root>
 		<Sheet.Trigger>
 			<Button variant="ghost">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="lucide lucide-menu"
-				>
-					<line x1="4" x2="20" y1="12" y2="12" />
-					<line x1="4" x2="20" y1="6" y2="6" />
-					<line x1="4" x2="20" y1="18" y2="18" />
-				</svg>
+				<Menu />
 			</Button>
 		</Sheet.Trigger>
 		<Sheet.Content>
@@ -76,30 +60,23 @@
 {/snippet}
 
 {#snippet headerButtonSection()}
-	<Button variant="link" href="/cart" class="relative size-14 rounded-full hover:bg-primary/10">
-		<svg class="size-6" viewBox="0 0 24 24">
-			<g
-				fill="none"
-				stroke="currentColor"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				stroke-width="2"
-			>
-				<circle cx="8" cy="21" r="1" />
-				<circle cx="19" cy="21" r="1" />
-				<path
-					d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
-				/>
-			</g>
-		</svg>
-		<div class="absolute right-0 top-1 size-5 rounded-full bg-orange-500 dark:bg-orange-600">
+	<Button
+		variant="link"
+		size="icon"
+		href="/cart"
+		class="relative rounded-full p-6 hover:bg-primary/10"
+	>
+		<ShoppingCart class="size-8 p-1" />
+		<div
+			class="absolute -right-[0.375rem] -top-0 size-[1.375rem] content-center rounded-full bg-orange-500 text-center dark:bg-orange-600"
+		>
 			{data.totalNrInOrder}
 		</div>
 	</Button>
 	<Button variant="default">Sign in</Button>
 	<Button
 		onclick={theme.toggleDarkmode}
-		variant="outline"
+		variant="ghost"
 		size="icon"
 		class="rounded-full border-none bg-transparent hover:bg-primary/10"
 	>

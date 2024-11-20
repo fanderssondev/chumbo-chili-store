@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/ui/button/button.svelte';
+	import { Minus, Plus, Trash2 } from 'lucide-svelte';
 	import * as Card from '$lib/components/ui/card/index';
-	import Minus from '$lib/icons/minus.svelte';
-	import Plus from '$lib/icons/plus.svelte';
-	import Trash from '$lib/icons/trash.svelte';
 	import { currencyFormatter } from '$lib/utils/utils';
 
 	let { data } = $props();
@@ -68,7 +66,7 @@
 										formaction="?/delete"
 										variant="destructive"
 										name={'orderItemId'}
-										value={item.id}><Trash /></Button
+										value={item.id}><Trash2 /></Button
 									>
 								</form>
 							</div>

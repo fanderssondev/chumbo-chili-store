@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { Button } from '$lib/components/ui/button/index';
+	import { ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import * as Card from '$lib/components/ui/card/index';
 	import * as Table from '$lib/components/ui/table';
 	import { currencyFormatter } from '$lib/utils/utils';
@@ -71,14 +72,14 @@
 						onclick={() => setActivePicture(-1)}
 						class="absolute left-0 top-0 hidden h-full rounded-e-none p-0 hover:bg-transparent group-hover:block"
 					>
-						<!-- BUG <ChevronLeft class="size-16" /> -->
+						<ChevronLeft class="size-16" />
 					</Button>
 					<Button
 						variant="ghost"
 						onclick={() => setActivePicture(1)}
 						class="absolute right-0 top-0 hidden h-full rounded-s-none p-0 hover:bg-transparent group-hover:block"
 					>
-						<!-- BUG <ChevronRight class="size-16" /> -->
+						<ChevronRight class="size-16 rounded-full hover:bg-slate-400" />
 					</Button>
 				</div>
 			</div>
@@ -104,7 +105,7 @@
 	</div>
 	{#if (data?.product?.ProductDetails?.Rating?.nr_of_reviews ?? 0) > 0}
 		<div class="mb-4">
-			{@render stars()}
+			{@render stars(data.product?.ProductDetails.Rating.average ?? 0)}
 
 			<p class="text-sm text-muted-foreground">
 				{data?.product?.ProductDetails.Rating.nr_of_reviews}
@@ -140,7 +141,7 @@
 	</Table.Root>
 {/snippet}
 
-{#snippet stars()}
+{#snippet stars(ating: number)}
 	<svg width="138" height="26" viewBox="0 0 138 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 		{#each [1, 2, 3, 4, 5] as _, i}
 			<!-- Define a mask to control partial fill for the star at index {i} -->
@@ -163,20 +164,19 @@
 				d="M{13 + i * 28} 1L{16.708 + i * 28} 8.89905L{25 + i * 28} 10.1735L{19 +
 					i * 28} 16.3186L{20.416 + i * 28} 25L{13 + i * 28} 20.8991L{5.584 + i * 28} 25L{7 +
 					i * 28} 16.3186L{1 + i * 28} 10.1735L{9.292 + i * 28} 8.89905L{13 + i * 28} 1Z"
-				stroke="currentColor"
+				class="stroke-slate-400 stroke-[1.25] dark:stroke-slate-500"
 				stroke-linecap="round"
 				stroke-linejoin="round"
 				fill="transparent"
 			/>
 
 			<!-- Star fill using the clipPath for partial fill -->
-			<!-- BUG doesn't color stars -->
 			<path
 				d="M{13 + i * 28} 1L{16.708 + i * 28} 8.89905L{25 + i * 28} 10.1735L{19 +
 					i * 28} 16.3186L{20.416 + i * 28} 25L{13 + i * 28} 20.8991L{5.584 + i * 28} 25L{7 +
 					i * 28} 16.3186L{1 + i * 28} 10.1735L{9.292 + i * 28} 8.89905L{13 + i * 28} 1Z"
 				stroke="none"
-				fill="hsl(var(--star))"
+				class="fill-amber-400 dark:fill-yellow-400"
 				clip-path="url(#clip-{i})"
 			/>
 		{/each}
@@ -184,15 +184,18 @@
 {/snippet}
 
 <style>
-	:global(.description h2) {
-		@apply mb-4 text-xl font-semibold;
-	}
+	:global {
+		.description h2 {
+			@apply mb-4 text-xl font-semibold;
+		}
 
-	:global(.description h3, description h4) {
-		@apply mb-4 text-lg font-semibold;
-	}
+		.description h3,
+		.description h4 {
+			@apply mb-4 text-lg font-semibold;
+		}
 
-	:global(.description p:not(:has(+ ul))) {
-		@apply mb-2;
+		.description p:not(:has(+ ul)) {
+			@apply mb-2;
+		}
 	}
 </style>
