@@ -2,7 +2,7 @@ import type { LayoutServerLoad } from './$types';
 
 import { prisma } from '$lib/db/prisma';
 
-export const load: LayoutServerLoad = async ({ cookies }) => {
+export const load: LayoutServerLoad = async ({ cookies, locals }) => {
   const cartId = cookies.get('cartId');
 
   if (cartId) {
@@ -19,6 +19,8 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
     };
   }
   return {
-    totalNrInOrder: 0
+    totalNrInOrder: 0,
+    user: locals.user,
+    session: locals.session
   };
 };

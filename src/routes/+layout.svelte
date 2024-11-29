@@ -34,6 +34,7 @@
 	</li>
 {/snippet}
 
+<!-- Mobile menu -->
 {#snippet hamburgerMenu()}
 	<Sheet.Root>
 		<Sheet.Trigger>
@@ -73,7 +74,8 @@
 			{data.totalNrInOrder}
 		</div>
 	</Button>
-	<Button variant="default">Sign in</Button>
+	<Button href="/login">Login</Button>
+	<Button href="/signup">Sign up</Button>
 	<Button
 		onclick={theme.toggleDarkmode}
 		variant="ghost"
