@@ -68,11 +68,13 @@
 		class="relative rounded-full p-6 hover:bg-primary/10"
 	>
 		<ShoppingCart class="size-8 p-1" />
-		<div
-			class="absolute -right-[0.375rem] -top-0 size-[1.375rem] content-center rounded-full bg-orange-500 text-center dark:bg-orange-600"
-		>
-			{data.totalNrInOrder}
-		</div>
+		{#if data.totalNrInOrder && data.totalNrInOrder > 0}
+			<div
+				class="absolute -right-[0.375rem] -top-0 size-[1.375rem] content-center rounded-full bg-orange-500 text-center dark:bg-orange-600"
+			>
+				{data.totalNrInOrder}
+			</div>
+		{/if}
 	</Button>
 	<Button href="/login">Login</Button>
 	<Button href="/signup">Sign up</Button>
@@ -107,7 +109,7 @@
 	</div>
 </header>
 
-<main class=" my-8 min-h-screen px-4 md:container lg:my-16">
+<main class="my-8 min-h-screen px-4 md:container lg:my-16">
 	{@render children()}
 </main>
 

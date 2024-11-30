@@ -4,7 +4,7 @@
 	import { ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import * as Card from '$lib/components/ui/card/index';
 	import * as Table from '$lib/components/ui/table';
-	import { currencyFormatter } from '$lib/utils/utils';
+	import { currencyFormatter } from '$lib/utils';
 
 	let { data } = $props();
 

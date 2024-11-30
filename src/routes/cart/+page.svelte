@@ -3,7 +3,7 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { Minus, Plus, Trash2 } from 'lucide-svelte';
 	import * as Card from '$lib/components/ui/card/index';
-	import { currencyFormatter } from '$lib/utils/utils';
+	import { currencyFormatter } from '$lib/utils';
 
 	let { data } = $props();
 </script>

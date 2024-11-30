@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card/index';
-	import { currencyFormatter } from '$lib/utils/utils';
+	import { currencyFormatter } from '$lib/utils';
 
 	interface Props {
 		title: string;
