@@ -76,8 +76,12 @@
 			</div>
 		{/if}
 	</Button>
-	<Button href="/login">Login</Button>
-	<Button href="/signup">Sign up</Button>
+	{#if !data.user}
+		<Button href="/login">Login</Button>
+		<Button href="/signup">Sign up</Button>
+	{:else}
+		<div>{data.user.firstName} {data.user.lastName}</div>
+	{/if}
 	<Button
 		onclick={theme.toggleDarkmode}
 		variant="ghost"
