@@ -1,10 +1,12 @@
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
-	import { signupSchema, type FormSchema } from './schema';
+	import { signupSchema, type FormSchema } from './signupSchema';
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import * as Card from '$lib/components/ui/card/index.js';
+	import { Button } from '$lib/components/ui/button';
+	import Separator from '$lib/components/ui/separator/separator.svelte';
 
 	let { data } = $props();
 
@@ -15,8 +17,8 @@
 </script>
 
 <Card.Root class="mx-auto flex h-full max-w-xl flex-col rounded-lg border-2 bg-accent">
-	<Card.Header class="p-4 pb-12 lg:p-20 lg:pt-8">
-		<Card.Title class="mb-4 mt-2 text-center text-3xl sm:text-4xl md:mb-10 md:mt-6 lg:text-5xl"
+	<Card.Header class="p-4 lg:pt-8">
+		<Card.Title class="mt-2 text-center text-3xl sm:text-4xl md:mb-10 md:mt-6 lg:text-5xl"
 			>Sign up</Card.Title
 		>
 	</Card.Header>
@@ -91,7 +93,10 @@
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
-			<Form.Button>Submit</Form.Button>
+			<Form.Button class="my-6 w-full">Submit</Form.Button>
 		</form>
+		<Separator class="my-4 bg-secondary-foreground" />
+		<div class="mb-3">Already have an account?</div>
+		<Button href="/login">Login here</Button>
 	</Card.Content>
 </Card.Root>
