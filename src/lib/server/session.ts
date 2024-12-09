@@ -51,7 +51,7 @@ export async function validateSessionToken(token: string): Promise<SessionValida
     return { session: null, user: null };
   }
 
-  // If session will  expire in less than 15 days
+  // If session will expire in less than 15 days
   if (Date.now() >= session.expiresAt.getTime() - 1000 * 60 * 60 * 24 * 15) {
     session.expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30);
     await prisma.session.update({

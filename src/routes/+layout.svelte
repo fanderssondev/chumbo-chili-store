@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.css';
+	import { enhance } from '$app/forms';
 	import { Sun, Moon, ShoppingCart, Menu } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { useTheme } from '$lib/stores/useTheme.svelte';
@@ -81,6 +82,9 @@
 		<Button href="/signup">Sign up</Button>
 	{:else}
 		<div>{data.user.firstName} {data.user.lastName}</div>
+		<form action="/logout" method="POST" use:enhance>
+			<Button type="submit">Logout</Button>
+		</form>
 	{/if}
 	<Button
 		onclick={theme.toggleDarkmode}
