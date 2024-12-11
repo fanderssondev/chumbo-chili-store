@@ -1,11 +1,11 @@
 <script lang="ts">
 	import '../app.css';
-	import { enhance } from '$app/forms';
 	import { Sun, Moon, ShoppingCart, Menu } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { useTheme } from '$lib/stores/useTheme.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import * as Sheet from '$lib/components/ui/sheet';
+	import UserMenu from '$lib/components/userMenu.svelte';
 
 	const { data, children } = $props();
 
@@ -81,10 +81,7 @@
 		<Button href="/login">Login</Button>
 		<Button href="/signup">Sign up</Button>
 	{:else}
-		<div>{data.user.firstName} {data.user.lastName}</div>
-		<form action="/logout" method="POST" use:enhance>
-			<Button type="submit">Logout</Button>
-		</form>
+		<UserMenu firstName={data.user.firstName} lastName={data.user.lastName} />
 	{/if}
 	<Button
 		onclick={theme.toggleDarkmode}

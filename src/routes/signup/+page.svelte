@@ -93,7 +93,7 @@
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
-			<Form.Button class="my-6 w-full">Submit</Form.Button>
+			<Form.Button class="my-6 w-full">Sign up</Form.Button>
 		</form>
 		<Separator class="my-4 bg-secondary-foreground" />
 		<div class="mb-3">Already have an account?</div>
