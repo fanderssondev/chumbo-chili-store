@@ -41,9 +41,7 @@ export const actions: Actions = {
     const token = generateSessionToken();
     const session = await createSession(token, user.id);
 
-    const { passwordHash, createdAt, updatedAt, ...clientUser } = user;
-
-    event.locals.user = clientUser;
+    event.locals.user = user;
     event.locals.session = session;
 
     if (user && session) {

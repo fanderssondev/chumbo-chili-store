@@ -1,30 +1,34 @@
 <script lang="ts">
+	import { superForm } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { userInfoFormSchema } from './userInfoFormSchema';
+	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
-	import { userInfoFormSchema } from './userInfoFormSchema';
-	import { superForm } from 'sveltekit-superforms';
-	import { zodClient } from 'sveltekit-superforms/adapters';
-	import * as Card from '$lib/components/ui/card/index.js';
+	import Separator from '$lib/components/ui/separator/separator.svelte';
 
-	let { data } = $props();
+	import SuperDebug from 'sveltekit-superforms';
 
-	const form = superForm(data.form, {
+	let { data: pageData } = $props();
+
+	// BUG Form doesn't save state on submit. Should save firstName, lastName and email
+	const form = superForm(pageData.form, {
 		validators: zodClient(userInfoFormSchema)
 	});
 	const { form: formData, enhance } = form;
 
-	if (data.user) {
+	if (pageData.user) {
 		$formData = {
 			...$formData,
-			email: data.user.email,
-			firstName: data.user.firstName,
-			lastName: data.user.lastName
+			email: pageData.user.email,
+			firstName: pageData.user.firstName,
+			lastName: pageData.user.lastName
 		};
 	}
 </script>
 
-<Tabs.Root value="user" class="">
+<Tabs.Root value="user">
 	<Tabs.List>
 		<Tabs.Trigger value="user">User information</Tabs.Trigger>
 		<Tabs.Trigger value="password">Password</Tabs.Trigger>
@@ -35,10 +39,9 @@
 	<Tabs.Content value="password">Change your password here.</Tabs.Content>
 </Tabs.Root>
 
-<pre>
-	{JSON.stringify(data.user, null, 2)}
-	{JSON.stringify(data.session, null, 2)}
-</pre>
+<div class="mt-4">
+	<SuperDebug data={$formData} />
+</div>
 
 {#snippet userInfoForm()}
 	<Card.Root class="mx-auto flex h-full max-w-xl flex-col rounded-lg border-2 bg-accent">
@@ -49,7 +52,7 @@
 		</Card.Header>
 		<Card.Content class="flex h-full flex-grow flex-col px-4 pb-10 pt-0 lg:px-20">
 			<form method="POST" use:enhance>
-				<!-- First name -->
+				<!-- firstName -->
 				<Form.Field {form} name="firstName">
 					<Form.Control>
 						{#snippet children({ props })}
@@ -60,7 +63,7 @@
 					<Form.FieldErrors />
 				</Form.Field>
 
-				<!-- Last name -->
+				<!-- lastName -->
 				<Form.Field {form} name="lastName">
 					<Form.Control>
 						{#snippet children({ props })}
@@ -71,7 +74,7 @@
 					<Form.FieldErrors />
 				</Form.Field>
 
-				<!-- Email -->
+				<!-- email -->
 				<Form.Field {form} name="email">
 					<Form.Control>
 						{#snippet children({ props })}
@@ -82,7 +85,7 @@
 					<Form.FieldErrors />
 				</Form.Field>
 
-				<!-- Password -->
+				<!-- password -->
 				<Form.Field {form} name="password">
 					<Form.Control>
 						{#snippet children({ props })}
@@ -98,16 +101,38 @@
 					<Form.FieldErrors />
 				</Form.Field>
 
-				<!-- Confirm password -->
-				<Form.Field {form} name="confirmPassword">
+				<Separator class="my-6 h-[2px]" />
+				<h3 class="text-lg">Change password</h3>
+				<p class="mb-4 text-muted-foreground">
+					Leave blank if you don't wish to change the password
+				</p>
+
+				<!-- newPassword -->
+				<Form.Field {form} name="newPassword">
 					<Form.Control>
 						{#snippet children({ props })}
-							<Form.Label>Confirm password</Form.Label>
+							<Form.Label>New password</Form.Label>
 							<Input
 								{...props}
-								bind:value={$formData.confirmPassword}
+								bind:value={$formData.newPassword}
 								type="password"
-								placeholder="Confirm password"
+								placeholder="Enter new password"
+							/>
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+
+				<!-- confirmNewPassword -->
+				<Form.Field {form} name="confirmNewPassword">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Confirm new password</Form.Label>
+							<Input
+								{...props}
+								bind:value={$formData.confirmNewPassword}
+								type="password"
+								placeholder="Confirm new password"
 							/>
 						{/snippet}
 					</Form.Control>

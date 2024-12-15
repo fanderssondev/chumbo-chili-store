@@ -6,24 +6,39 @@ export const userInfoFormSchema = z
     lastName: z.string().min(1).max(50),
     email: z.string().email(),
     password: z
+      .string()
+      .min(6, { message: "Minimum lenght is 6" })
+      .refine(
+        (val) => /[A-Z]/.test(val),
+        { message: "Password must contain at least one uppercase letter." }
+      )
+      .refine(
+        (val) => /[a-z]/.test(val),
+        { message: "Password must contain at least one lowercase letter." }
+      )
+      .refine(
+        (val) => /\d/.test(val),
+        { message: "Password must contain at least one number." }
+      ),
+    newPassword: z
       .string(),
-    confirmPassword: z.string(),
+    confirmNewPassword: z.string(),
   })
   .refine(
     (data) =>
-      (data.password === "" && data.confirmPassword === "") ||
-      (data.password !== "" && data.password === data.confirmPassword),
+      (data.newPassword === "" && data.confirmNewPassword === "") ||
+      (data.newPassword !== "" && data.newPassword === data.confirmNewPassword),
     {
       message: "Passwords must match or both be empty.",
       path: ["confirmPassword"], // Point the error at confirmPassword
     }
   )
   .superRefine((data, ctx) => {
-    if (data.password === "" && data.confirmPassword === "") {
+    if (data.newPassword === "" && data.confirmNewPassword === "") {
       return; // Allow empty passwords if both are empty
     }
 
-    if (data.password.length < 6) {
+    if (data.newPassword.length < 6) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["password"],
@@ -31,7 +46,7 @@ export const userInfoFormSchema = z
       });
     }
 
-    if (!/[A-Z]/.test(data.password)) {
+    if (!/[A-Z]/.test(data.newPassword)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["password"],
@@ -39,7 +54,7 @@ export const userInfoFormSchema = z
       });
     }
 
-    if (!/[a-z]/.test(data.password)) {
+    if (!/[a-z]/.test(data.newPassword)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["password"],
@@ -47,7 +62,7 @@ export const userInfoFormSchema = z
       });
     }
 
-    if (!/\d/.test(data.password)) {
+    if (!/\d/.test(data.newPassword)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["password"],

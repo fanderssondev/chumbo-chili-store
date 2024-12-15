@@ -24,7 +24,7 @@
 	</Card.Header>
 	<Card.Content class="flex h-full flex-grow flex-col px-4 pb-10 pt-0 lg:px-20">
 		<form method="POST" use:enhance>
-			<!-- Email -->
+			<!-- email -->
 			<Form.Field {form} name="email">
 				<Form.Control>
 					{#snippet children({ props })}
@@ -40,7 +40,7 @@
 				<Form.FieldErrors />
 			</Form.Field>
 
-			<!-- Password -->
+			<!-- password -->
 			<Form.Field {form} name="password">
 				<Form.Control>
 					{#snippet children({ props })}

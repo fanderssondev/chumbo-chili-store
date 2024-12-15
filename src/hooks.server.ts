@@ -22,11 +22,8 @@ export const handle: Handle = async ({ event, resolve }) => {
     deleteSessionTokenCookie(event);
   }
 
-  if (user) {
-    const { passwordHash, createdAt, updatedAt, ...clientUser } = user;
+  event.locals.user = user;
+  event.locals.session = session;
 
-    event.locals.user = clientUser;
-    event.locals.session = session;
-  }
   return resolve(event);
 };

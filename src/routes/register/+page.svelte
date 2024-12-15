@@ -35,7 +35,7 @@
 				<Form.FieldErrors />
 			</Form.Field>
 
-			<!-- Last name -->
+			<!-- lastName -->
 			<Form.Field {form} name="lastName">
 				<Form.Control>
 					{#snippet children({ props })}
@@ -46,7 +46,7 @@
 				<Form.FieldErrors />
 			</Form.Field>
 
-			<!-- Email -->
+			<!-- email -->
 			<Form.Field {form} name="email">
 				<Form.Control>
 					{#snippet children({ props })}
@@ -62,7 +62,7 @@
 				<Form.FieldErrors />
 			</Form.Field>
 
-			<!-- Password -->
+			<!-- password -->
 			<Form.Field {form} name="password">
 				<Form.Control>
 					{#snippet children({ props })}
@@ -78,7 +78,7 @@
 				<Form.FieldErrors />
 			</Form.Field>
 
-			<!-- Confirm password -->
+			<!-- confirmPassword -->
 			<Form.Field {form} name="confirmPassword">
 				<Form.Control>
 					{#snippet children({ props })}

@@ -1,12 +1,10 @@
 import type { Actions, PageServerLoad } from '../$types';
-import { superValidate } from "sveltekit-superforms";
+import { setError, superValidate } from "sveltekit-superforms";
 import { userInfoFormSchema } from "./userInfoFormSchema";
 import { zod } from "sveltekit-superforms/adapters";
 import { fail, redirect } from '@sveltejs/kit';
 import { prisma } from '$lib/db/prisma';
 import bcrypt from 'bcrypt';
-import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/session';
-import type { User } from '@prisma/client';
 
 export const load: PageServerLoad = async ({ locals }) => {
   // redirect user if not logged in
@@ -28,8 +26,17 @@ export const actions: Actions = {
       });
     }
 
-    const { data: { firstName, lastName, email, password } } = form;
+    const { data: { firstName, lastName, email, password, newPassword, confirmNewPassword } } = form;
 
+    if (!event.locals.user) {
+      redirect(302, '/login');
+    }
+
+    if (!await bcrypt.compare(password, event.locals.user.passwordHash)) {
+      return setError(form, 'password', 'Password is incorrect');
+    }
+
+    // Check if new password was requested
     type newDataType = Pick<typeof form.data, "firstName" | "lastName"> & { passwordHash?: string; };
 
     let newData: newDataType = {
@@ -43,26 +50,9 @@ export const actions: Actions = {
       };
     }
 
-    const user = await prisma.user.update({
-      where: {
-        email
-      },
-      data: {
-        ...newData
-      }
-    });
+    const user = await prisma.user.update({ where: { email }, data: { ...newData } });
 
-
-    // const token = generateSessionToken();
-    // const session = await createSession(token, user.id);
-
-    // event.locals.user = user;
-    // event.locals.session = session;
-
-    // TODO Redirect back to previous page if on site
-    // if (user && session) {
-    //   setSessionTokenCookie(event, token, session.expiresAt);
-    // }
+    // const newForm = await superValidate(user, zod(userInfoFormSchema));
 
     return {
       form,
