@@ -22,11 +22,11 @@ export const actions: Actions = {
     const form = await superValidate(event, zod(userInfoFormSchema));
     if (!form.valid) {
       return fail(400, {
-        form,
+        inputForm: form,
       });
     }
 
-    const { data: { firstName, lastName, email, password, newPassword, confirmNewPassword } } = form;
+    const { data: { firstName, lastName, email, password, newPassword } } = form;
 
     if (!event.locals.user) {
       redirect(302, '/login');
@@ -36,26 +36,24 @@ export const actions: Actions = {
       return setError(form, 'password', 'Password is incorrect');
     }
 
-    // Check if new password was requested
+    // Check if change password
     type newDataType = Pick<typeof form.data, "firstName" | "lastName"> & { passwordHash?: string; };
 
     let newData: newDataType = {
       firstName,
       lastName
     };
-    if (password !== '') {
+    if (newPassword !== '') {
       newData = {
         ...newData,
-        passwordHash: await bcrypt.hash(password, 10)
+        passwordHash: await bcrypt.hash(newPassword, 10)
       };
     }
 
     const user = await prisma.user.update({ where: { email }, data: { ...newData } });
 
-    // const newForm = await superValidate(user, zod(userInfoFormSchema));
-
     return {
-      form,
+      form: await superValidate(event.locals.user, zod(userInfoFormSchema))
     };
   },
 };

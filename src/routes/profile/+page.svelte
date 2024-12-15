@@ -18,14 +18,14 @@
 	});
 	const { form: formData, enhance } = form;
 
-	if (pageData.user) {
-		$formData = {
-			...$formData,
-			email: pageData.user.email,
-			firstName: pageData.user.firstName,
-			lastName: pageData.user.lastName
-		};
-	}
+	// if (pageData.user) {
+	// 	$formData = {
+	// 		...$formData,
+	// 		email: pageData.user.email,
+	// 		firstName: pageData.user.firstName,
+	// 		lastName: pageData.user.lastName
+	// 	};
+	// }
 </script>
 
 <Tabs.Root value="user">
@@ -34,7 +34,16 @@
 		<Tabs.Trigger value="password">Password</Tabs.Trigger>
 	</Tabs.List>
 	<Tabs.Content value="user">
-		{@render userInfoForm()}
+		<div class="flex justify-between gap-4">
+			<div class="w-1/3">
+				<SuperDebug data={$formData} />
+				<p class="mt-8">$formData</p>
+				<pre>
+					{JSON.stringify($formData, null, 2)}
+				</pre>
+			</div>
+			{@render userInfoForm()}
+		</div>
 	</Tabs.Content>
 	<Tabs.Content value="password">Change your password here.</Tabs.Content>
 </Tabs.Root>
@@ -44,7 +53,7 @@
 </div>
 
 {#snippet userInfoForm()}
-	<Card.Root class="mx-auto flex h-full max-w-xl flex-col rounded-lg border-2 bg-accent">
+	<Card.Root class="flex h-full w-full flex-col rounded-lg border-2 bg-accent">
 		<Card.Header class="p-4 lg:pt-8">
 			<Card.Title class="mt-2 text-center text-3xl sm:text-4xl md:mb-10 md:mt-6 lg:text-5xl"
 				>Account information</Card.Title
@@ -79,7 +88,7 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<Form.Label>Email address</Form.Label>
-							<Input {...props} bind:value={$formData.email} type="email" />
+							<Input {...props} bind:value={$formData.email} type="email" readonly />
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />

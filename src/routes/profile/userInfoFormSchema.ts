@@ -20,8 +20,7 @@ export const userInfoFormSchema = z
         (val) => /\d/.test(val),
         { message: "Password must contain at least one number." }
       ),
-    newPassword: z
-      .string(),
+    newPassword: z.string(),
     confirmNewPassword: z.string(),
   })
   .refine(
@@ -29,8 +28,8 @@ export const userInfoFormSchema = z
       (data.newPassword === "" && data.confirmNewPassword === "") ||
       (data.newPassword !== "" && data.newPassword === data.confirmNewPassword),
     {
-      message: "Passwords must match or both be empty.",
-      path: ["confirmPassword"], // Point the error at confirmPassword
+      message: "Passwords does not match.",
+      path: ["confirmNewPassword"], // Point the error at confirmPassword
     }
   )
   .superRefine((data, ctx) => {
@@ -41,7 +40,7 @@ export const userInfoFormSchema = z
     if (data.newPassword.length < 6) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["password"],
+        path: ["newPassword"],
         message: "Minimum length is 6",
       });
     }
@@ -49,7 +48,7 @@ export const userInfoFormSchema = z
     if (!/[A-Z]/.test(data.newPassword)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["password"],
+        path: ["newPassword"],
         message: "Password must contain at least one uppercase letter.",
       });
     }
@@ -57,7 +56,7 @@ export const userInfoFormSchema = z
     if (!/[a-z]/.test(data.newPassword)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["password"],
+        path: ["newPassword"],
         message: "Password must contain at least one lowercase letter.",
       });
     }
@@ -65,7 +64,7 @@ export const userInfoFormSchema = z
     if (!/\d/.test(data.newPassword)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["password"],
+        path: ["newPassword"],
         message: "Password must contain at least one number.",
       });
     }
