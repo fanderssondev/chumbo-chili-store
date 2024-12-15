@@ -42,7 +42,9 @@ export const actions: Actions = {
     const token = generateSessionToken();
     const session = await createSession(token, user.id);
 
-    event.locals.user = user;
+    const { passwordHash, createdAt, updatedAt, ...clientUser } = user;
+
+    event.locals.user = clientUser;
     event.locals.session = session;
 
     // TODO Redirect back to previous page if on site

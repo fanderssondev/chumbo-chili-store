@@ -6,6 +6,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { prisma } from '$lib/db/prisma';
 import bcrypt from 'bcrypt';
 import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/session';
+import type { ClientUser } from '$lib/types';
 
 export const load: PageServerLoad = async () => {
   return {
@@ -40,7 +41,9 @@ export const actions: Actions = {
     const token = generateSessionToken();
     const session = await createSession(token, user.id);
 
-    event.locals.user = user;
+    const { passwordHash, createdAt, updatedAt, ...clientUser } = user;
+
+    event.locals.user = clientUser;
     event.locals.session = session;
 
     if (user && session) {

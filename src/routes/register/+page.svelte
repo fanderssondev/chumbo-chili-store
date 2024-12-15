@@ -2,7 +2,7 @@
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { signupSchema, type FormSchema } from './signupSchema';
-	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import { Button } from '$lib/components/ui/button';
@@ -19,7 +19,7 @@
 <Card.Root class="mx-auto flex h-full max-w-xl flex-col rounded-lg border-2 bg-accent">
 	<Card.Header class="p-4 lg:pt-8">
 		<Card.Title class="mt-2 text-center text-3xl sm:text-4xl md:mb-10 md:mt-6 lg:text-5xl"
-			>Sign up</Card.Title
+			>Create account</Card.Title
 		>
 	</Card.Header>
 	<Card.Content class="flex h-full flex-grow flex-col px-4 pb-10 pt-0 lg:px-20">
@@ -93,7 +93,7 @@
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
-			<Form.Button class="my-6 w-full">Sign up</Form.Button>
+			<Form.Button class="my-6 w-full">Create account</Form.Button>
 		</form>
 		<Separator class="my-4 bg-secondary-foreground" />
 		<div class="mb-3">Already have an account?</div>

@@ -1,3 +1,4 @@
+import type { ClientUser } from '$lib/types';
 import {
   validateSessionToken,
   setSessionTokenCookie,
@@ -21,7 +22,11 @@ export const handle: Handle = async ({ event, resolve }) => {
     deleteSessionTokenCookie(event);
   }
 
-  event.locals.session = session;
-  event.locals.user = user;
+  if (user) {
+    const { passwordHash, createdAt, updatedAt, ...clientUser } = user;
+
+    event.locals.user = clientUser;
+    event.locals.session = session;
+  }
   return resolve(event);
 };

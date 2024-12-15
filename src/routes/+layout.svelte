@@ -79,9 +79,8 @@
 	</Button>
 	{#if !data.user}
 		<Button href="/login">Login</Button>
-		<Button href="/signup">Sign up</Button>
 	{:else}
-		<UserMenu firstName={data.user.firstName} lastName={data.user.lastName} />
+		<UserMenu {...data.user} />
 	{/if}
 	<Button
 		onclick={theme.toggleDarkmode}

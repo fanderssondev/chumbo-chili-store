@@ -59,6 +59,6 @@
 		</form>
 		<Separator class="my-4 bg-secondary-foreground" />
 		<div class="mb-3">Don't have an account yet?</div>
-		<Button href="/login">Sign up here</Button>
+		<Button href="/register">Create an account here</Button>
 	</Card.Content>
 </Card.Root>
