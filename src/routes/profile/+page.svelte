@@ -18,14 +18,14 @@
 	});
 	const { form: formData, enhance } = form;
 
-	// if (pageData.user) {
-	// 	$formData = {
-	// 		...$formData,
-	// 		email: pageData.user.email,
-	// 		firstName: pageData.user.firstName,
-	// 		lastName: pageData.user.lastName
-	// 	};
-	// }
+	if (pageData.user) {
+		$formData = {
+			...$formData,
+			email: pageData.user.email,
+			firstName: pageData.user.firstName,
+			lastName: pageData.user.lastName
+		};
+	}
 </script>
 
 <Tabs.Root value="user">

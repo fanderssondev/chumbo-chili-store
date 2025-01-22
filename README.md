@@ -1,38 +1,31 @@
-# create-svelte
+# Chumbo Chili store
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+## About project
+This project is an ecommerce store selling chili. It was made as a demo project to demonstrate the technical skills and knowledge of the author as a full stack web developer.
 
-## Creating a project
+#### Technologies used
+- [Svelte 5](https://svelte.dev/)
+- [Sveltekit](https://svelte.dev/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Prisma](https://www.prisma.io/)
+- [Postgresql](https://www.postgresql.org/)
+- [Supabase](https://supabase.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [ShadCN Svelte](https://shadcn-svelte.com/)
+- [Zod](https://zod.dev/)
+- [Sveltekit Superforms](https://superforms.rocks/)
 
-If you're seeing this, you've probably already done this step. Congrats!
+#### How to run project
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+1. Clone project 
+a. with **https**. Run ```https://github.com/fanderssondev/chumbo-chili-store.git```
+b. with **ssh**. Run ```git clone git@github.com:fanderssondev/chumbo-chili-store.git```
+c. with **GitHub CLI**. Run ```gh repo clone fanderssondev/chumbo-chili-store```
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+2. Install dependecies. Run ```npm i```
 
-## Developing
+3. Copy the **.env.example** file. 
+a. Run ```cp ./.env.example ./.env```
+b. Change the connection URL string to connect with database
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+4. Push database migratation. Run ```npx prisma db push```
